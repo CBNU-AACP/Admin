@@ -1,0 +1,99 @@
+@import "../../style/color.scss";
+.loginForm {
+  background-color: $white;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  .title {
+    margin: auto auto 30px auto;
+    color: $black;
+    font-size: 3rem;
+    font-weight: bold;
+  }
+  .form {
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    margin: 0 auto 30px auto;
+    border: 1px solid $gray400;
+    border-radius: 7px;
+    box-shadow: 0 2px 6px 0 rgba(68, 68, 68, 0.08);
+    .lock,
+    .icon {
+      margin: auto 10px;
+      color: $gray400;
+      font-size: 1.2rem;
+    }
+    .idBox {
+      margin: 30px 30px 0px 30px;
+      border-radius: 7px 7px 0 0;
+    }
+    .pwBox {
+      margin: -1px 30px 30px 30px;
+      border-radius: 0 0 7px 7px;
+    }
+    .box {
+      display: flex;
+      height: 50px;
+      padding: 2px 5px;
+      border: 1px solid $gray400;
+      box-shadow: 0 2px 6px 0 rgba(68, 68, 68, 0.08);
+      .lockBox {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        outline: 0;
+        background-color: transparent;
+        .unLock {
+          margin: auto 10px;
+          color: $primary;
+          font-size: 1.2rem;
+        }
+        & :hover {
+          color: $primary;
+          cursor: pointer;
+        }
+      }
+      .input {
+        width: 300px;
+        border: none;
+        outline: none;
+        font-size: 1.2rem;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+    .focus {
+      z-index: 5;
+      padding: 1px 4px;
+      border: 2px solid $primary;
+    }
+    .submit {
+      height: 70px;
+      padding: 2px 5px;
+      margin: 30px;
+      border: none;
+      border-radius: 7px;
+      box-shadow: 0 2px 6px 0 rgba(68, 68, 68, 0.08);
+      background-color: $primary;
+      color: $black;
+      font-size: 1.5rem;
+      font-weight: bold;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    .message {
+      height: 19px;
+      margin: 0 30px;
+      color: $black;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+  }
+  .img {
+    width: 400px;
+    margin: 0 auto auto auto;
+  }
+}
