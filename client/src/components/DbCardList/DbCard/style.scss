@@ -1,0 +1,54 @@
+@import "../../../style/color.scss";
+.cardBox {
+  width: 300px;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  background-color: $white;
+  border-radius: 10px;
+  box-shadow: rgba(20, 10, 24, 0.08) 0px 1px 0px,
+    rgba(20, 20, 24, 0.08) 0px 0px 5px;
+  margin: 30px;
+  padding: 5px;
+  &:hover {
+    padding: 2px;
+    border: 3px solid $deepblue;
+  }
+  .dropBox {
+    display: flex;
+    flex-direction: row;
+    .drop {
+      width: 20px;
+      height: 20px;
+      background-color: $macDelete;
+      border-radius: 50%;
+      margin: 5px;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    .dropText {
+      margin: auto 0;
+      font-size: 15px;
+      font-weight: bold;
+    }
+    .dbText {
+      margin: auto;
+      margin-right: 5px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+  }
+
+  .cardText {
+    margin: auto;
+    margin-top: 30px;
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    color: $deepblue;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
