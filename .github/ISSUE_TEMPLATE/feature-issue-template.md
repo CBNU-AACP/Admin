@@ -1,8 +1,8 @@
 ---
 name: Feature issue template
-about: "[Feature] name"
-title: ''
-labels: ''
+about: 추가하고자 하는 기능과 관련된 이슈 템플릿입니다
+title: "[FEATURE]"
+labels: feature
 assignees: ''
 
 ---
