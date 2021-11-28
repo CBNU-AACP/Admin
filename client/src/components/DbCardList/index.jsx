@@ -12,15 +12,25 @@ export default function DataBases() {
   };
 
   return (
-    <div className="dbList">
-      {dbData.map(database => (
-        <DataBase
-          database={database.title}
-          key={database.id + database.title}
-          id={database.id}
-          remove={removeDb}
-        />
-      ))}
-    </div>
+    <>
+      <div className="dbList">
+        {dbData.map(database => (
+          <DataBase
+            database={database.title}
+            key={database.id + database.title}
+            id={database.id}
+            remove={removeDb}
+          />
+        ))}
+      </div>
+      <button
+        className="createDb"
+        type="button"
+        onClick={() => {}}
+        aria-hidden="true">
+        <div className="create" />
+        <p className="createText">DB 추가하기</p>
+      </button>
+    </>
   );
 }
