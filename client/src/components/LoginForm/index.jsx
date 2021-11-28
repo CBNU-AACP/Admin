@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { AiOutlineLock, AiOutlineUnlock } from "react-icons/ai";
 import { IoPersonOutline } from "react-icons/io5";
@@ -17,6 +18,8 @@ export default function LoginForm() {
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  const navigate = useNavigate();
 
   const userId = register("userId", { required: true });
   const password = register("password", { required: true });
@@ -37,6 +40,8 @@ export default function LoginForm() {
     console.log(data);
     try {
       const response = await http.post(`login`, data);
+      localStorage.setItem("isAuthorized", response.success);
+      if (response.success) navigate("/");
     } catch (e) {
       console.log(e);
     }
