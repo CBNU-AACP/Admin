@@ -10,31 +10,39 @@
     rgba(20, 20, 24, 0.08) 0px 0px 5px;
   margin: 30px;
   padding: 5px;
+  .addBox {
+    margin: auto;
+    margin-right: 5px;
+  }
   &:hover {
     padding: 2px;
     border: 3px solid $deepblue;
   }
-  .dropBox {
+  .btnBox {
     display: flex;
     flex-direction: row;
-    .drop {
+    .circle {
       width: 20px;
       height: 20px;
-      background-color: $macDelete;
       border-radius: 50%;
       margin: 5px;
       &:hover {
         cursor: pointer;
       }
     }
-    .dropText {
+    .drop {
+      background-color: $macDelete;
+    }
+    .add {
+      background-color: $adding;
+    }
+    .text {
       margin: auto 0;
       font-size: 15px;
       font-weight: bold;
     }
     .dbText {
-      margin: auto;
-      margin-right: 5px;
+      margin: 5px 5px 5px auto;
       font-size: 20px;
       font-weight: bold;
     }
@@ -49,6 +57,27 @@
     color: $deepblue;
     &:hover {
       cursor: pointer;
+    }
+  }
+  .input {
+    width: 200px;
+    height: 30px;
+    border: none;
+    padding: 0;
+    font-family: "Nanum Gothic", sans-serif;
+    color: $black;
+    &:focus {
+      outline: none;
+    }
+    &::placeholder {
+      vertical-align: middle;
+      font-size: 15px;
+      transform: translateY(-4px);
+    }
+    &::-ms-input-placeholder {
+      vertical-align: middle;
+      font-size: 15px;
+      transform: translateY(-4px);
     }
   }
 }

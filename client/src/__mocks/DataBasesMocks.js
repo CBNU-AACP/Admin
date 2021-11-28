@@ -1,35 +1,35 @@
 const dataBases = [
   {
     id: 1,
-    title: "admin",
+    name: "admin",
   },
   {
     id: 2,
-    title: "checkmate",
+    name: "checkmate",
   },
   {
     id: 3,
-    title: "bluetooth",
+    name: "bluetooth",
   },
   {
     id: 4,
-    title: "bluetooth",
+    name: "bluetooth",
   },
   {
     id: 5,
-    title: "admin",
+    name: "admin",
   },
   {
     id: 6,
-    title: "checkmate",
+    name: "checkmate",
   },
   {
     id: 7,
-    title: "bluetooth",
+    name: "bluetooth",
   },
   {
     id: 8,
-    title: "bluetooth",
+    name: "bluetooth",
   },
 ];
 
