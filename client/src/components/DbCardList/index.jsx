@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import cx from "classnames";
 import DataBasesMocks from "../../__mocks/DataBasesMocks";
 import DataBase from "./DbCard";
@@ -7,8 +7,20 @@ import "./style.scss";
 
 export default function DataBases() {
   const [dbData, setDBData] = useState(DataBasesMocks);
+  const nextId = useRef(dbData.length + 1);
+
+  const addDb = (id, name) => {
+    // api 연결
+    console.log(id, name);
+  };
+
   const removeDb = remove => {
     setDBData(dbData.filter(db => db.id !== remove));
+  };
+
+  const newDb = () => {
+    setDBData([...dbData, { id: nextId.current, name: "" }]);
+    nextId.current += 1;
   };
 
   return (
@@ -16,9 +28,11 @@ export default function DataBases() {
       <div className="dbList">
         {dbData.map(database => (
           <DataBase
-            database={database.title}
-            key={database.id + database.title}
+            isNew={database.name === ""}
+            database={database.name}
+            key={database.id + database.name}
             id={database.id}
+            add={addDb}
             remove={removeDb}
           />
         ))}
@@ -26,7 +40,7 @@ export default function DataBases() {
       <button
         className="createDb"
         type="button"
-        onClick={() => {}}
+        onClick={newDb}
         aria-hidden="true">
         <div className="create" />
         <p className="createText">DB 추가하기</p>
