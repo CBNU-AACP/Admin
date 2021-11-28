@@ -1,0 +1,16 @@
+@import "../../style/color.scss";
+.dbPage {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  .groupTitle {
+    margin: 40px auto;
+    color: $black;
+    font-size: 40px;
+    font-weight: bold;
+  }
+  .main {
+    padding-bottom: 160px;
+  }
+}
