@@ -1,0 +1,37 @@
+@import "../../style/color.scss";
+.footer {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 120px;
+  bottom: 0;
+  background-color: $gray200;
+  border-top: 1px solid $gray400;
+  font-size: 15px;
+  .introCorp {
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+    .cmName {
+      font-weight: bold;
+    }
+    .cmLink {
+      margin-left: 10px;
+      text-decoration: none;
+      &:link {
+        color: $black;
+      }
+      &:visited {
+        color: $black;
+      }
+      &:hover {
+        font-weight: bold;
+      }
+    }
+  }
+  .corp {
+    font-weight: bold;
+    margin: auto;
+  }
+}
