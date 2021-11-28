@@ -6,3 +6,33 @@
   flex-wrap: wrap;
   margin: auto;
 }
+.createDb {
+  position: fixed;
+  right: 78px;
+  bottom: 59px;
+  z-index: 100;
+  display: flex;
+  flex-direction: row;
+  background-color: $white;
+  border-radius: 15px;
+  border: none;
+  box-shadow: rgba(20, 10, 24, 0.08) 0px 1px 0px,
+    rgba(20, 20, 24, 0.08) 0px 0px 5px;
+  &:hover {
+    background-color: $darkmode;
+    color: $white;
+    cursor: pointer;
+  }
+  .create {
+    width: 20px;
+    height: 20px;
+    background-color: $create;
+    border-radius: 50%;
+    margin: 5px;
+  }
+  .createText {
+    margin: auto 0;
+    font-size: 12px;
+    font-weight: bold;
+  }
+}

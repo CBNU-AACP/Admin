@@ -9,6 +9,7 @@ export default function AllDataBases() {
       <main className="main">
         <DataBases className="cardList" />
       </main>
+      
       <Footer />
     </div>
   );

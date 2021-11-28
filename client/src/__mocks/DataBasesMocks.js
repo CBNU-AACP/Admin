@@ -31,14 +31,6 @@ const dataBases = [
     id: 8,
     title: "bluetooth",
   },
-  {
-    id: 9,
-    title: "bluetooth",
-  },
-  {
-    id: 10,
-    title: "bluetooth",
-  },
 ];
 
 export default dataBases;
