@@ -47,7 +47,7 @@ export default function DataBase({ isNew, database, id, remove, add }) {
           <input
             className="cardText input"
             value={dbName}
-            placeholder="클릭하여 DB이름 입력."
+            placeholder="클릭하여 추가할 DB이름 입력."
             onChange={handleInputChange}
             autoFocus
           />
@@ -62,7 +62,7 @@ export default function DataBase({ isNew, database, id, remove, add }) {
               }}
               aria-hidden="true"
             />
-            <p className="text">입력완료</p>
+            <p className="text">추가</p>
           </div>
         </>
       ) : (

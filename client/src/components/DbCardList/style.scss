@@ -16,8 +16,7 @@
   background-color: $white;
   border-radius: 15px;
   border: none;
-  box-shadow: rgba(20, 10, 24, 0.08) 0px 1px 0px,
-    rgba(20, 20, 24, 0.08) 0px 0px 5px;
+  box-shadow: $box-shadow;
   &:hover {
     background-color: $darkmode;
     color: $white;
@@ -31,7 +30,7 @@
     margin: 5px;
   }
   .createText {
-    margin: auto 0;
+    margin: auto 5px auto 0;
     font-size: 12px;
     font-weight: bold;
   }
