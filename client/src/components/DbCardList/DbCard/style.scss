@@ -6,13 +6,11 @@
   flex-direction: column;
   background-color: $white;
   border-radius: 10px;
-  box-shadow: rgba(20, 10, 24, 0.08) 0px 1px 0px,
-    rgba(20, 20, 24, 0.08) 0px 0px 5px;
+  box-shadow: $box-shadow;
   margin: 30px;
   padding: 5px;
   .addBox {
-    margin: auto;
-    margin-right: 5px;
+    margin: 0 5px 0 auto;
   }
   &:hover {
     padding: 2px;
@@ -67,17 +65,19 @@
     font-family: "Nanum Gothic", sans-serif;
     color: $black;
     &:focus {
-      outline: none;
+      outline: 3px solid $primary;
+      // border-radius: 7px;
     }
     &::placeholder {
+      transform: translateY(-5px);
       vertical-align: middle;
-      font-size: 15px;
-      transform: translateY(-4px);
+      color: $black;
+      font-size: 12px;
     }
     &::-ms-input-placeholder {
+      transform: translateY(-5px);
       vertical-align: middle;
-      font-size: 15px;
-      transform: translateY(-4px);
+      font-size: 12px;
     }
   }
 }
