@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-autofocus */
 import React, { useState, useEffect } from "react";
 import cx from "classnames";
 import http from "../../../common/http";
@@ -48,6 +49,7 @@ export default function DataBase({ isNew, database, id, remove, add }) {
             value={dbName}
             placeholder="클릭하여 DB이름 입력."
             onChange={handleInputChange}
+            autoFocus
           />
           <div className="btnBox addBox">
             <div
