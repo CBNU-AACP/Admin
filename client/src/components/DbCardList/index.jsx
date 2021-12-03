@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import cx from "classnames";
 import DataBasesMocks from "../../__mocks/DataBasesMocks";
 import DataBase from "./DbCard";
-import http from "../../common/http";
+import http from "../../common/axios";
 import "./style.scss";
 
 export default function DataBases() {

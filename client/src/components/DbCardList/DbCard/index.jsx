@@ -1,13 +1,16 @@
 /* eslint-disable jsx-a11y/no-autofocus */
 import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import cx from "classnames";
-import http from "../../../common/http";
+import http from "../../../common/axios";
 import "./style.scss";
 
 export default function DataBase({ isNew, database, id, remove, add }) {
   const [dbName, setDbName] = useState("");
   const [msgState, setMsgState] = useState("");
   const [isAddClick, setIsAddClick] = useState(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (isNew && !isAddClick) {
@@ -25,6 +28,10 @@ export default function DataBase({ isNew, database, id, remove, add }) {
   const handleInputChange = event => {
     const { value } = event.target;
     setDbName(value);
+  };
+
+  const handleClick = dbName => {
+    if (!isAddClick) navigate(`/${dbName}`);
   };
 
   return (
@@ -66,7 +73,12 @@ export default function DataBase({ isNew, database, id, remove, add }) {
           </div>
         </>
       ) : (
-        <span className="cardText">{dbName}</span>
+        <span
+          className="cardText"
+          onClick={() => handleClick(dbName)}
+          aria-hidden="true">
+          {dbName}
+        </span>
       )}
     </div>
   );
