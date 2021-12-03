@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { AiOutlineLock, AiOutlineUnlock } from "react-icons/ai";
 import { IoPersonOutline } from "react-icons/io5";
 import cx from "classnames";
-import http from "../../common/http";
+import http from "../../common/axios";
 import "./style.scss";
 
 export default function LoginForm() {

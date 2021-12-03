@@ -1,6 +1,7 @@
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from "./pages/Login";
-import DataBases from "./pages/AllDataBases";
+import AllDataBases from "./pages/AllDataBases";
+import InsideDataBase from "./pages/InsideDataBase";
 
 function App() {
   const isAuthorized = localStorage.getItem("isAuthorized");
@@ -14,7 +15,8 @@ function App() {
       )} */}
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/" element={<DataBases />} />
+        <Route exact path="/" element={<AllDataBases />} />
+        <Route path="/:dbName" element={<InsideDataBase />} />
       </Routes>
     </BrowserRouter>
   );
