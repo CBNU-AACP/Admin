@@ -10,11 +10,10 @@ const app = express();
 
 const pool = mysql.createPool(config);
 pool.getConnection((err, connection)=>{
-  if(!err){
+  if(err)  console.error(err);
+  else{
     console.log("DB connected");
-    app.set('connection', pool);
-  }
-  connection.release();
+    connection.release();}
 });
 
 app.set('port', PORT || 3001);
