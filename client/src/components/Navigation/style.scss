@@ -1,0 +1,35 @@
+@import "../../style/color.scss";
+.navigation {
+  display: block;
+  left: 0;
+  width: 200px;
+  min-height: calc(100vh - 101px);
+  height: fit-content;
+  z-index: 5;
+  background-color: $white;
+  border-right: 1px solid $gray400;
+  word-break: break-all;
+  .naviTitle {
+    margin: 30px auto -10px 20px;
+    font-size: 25px;
+    font-weight: bold;
+  }
+  .sideMenu {
+    height: fit-content;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+    .tableTitle {
+      margin: 30px auto 0 30px;
+      color: $gray600;
+      font-size: 20px;
+      font-weight: 500;
+      &:hover {
+        color: $primary;
+        font-weight: bolder;
+        cursor: pointer;
+      }
+    }
+  }
+}
