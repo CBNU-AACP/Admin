@@ -1,0 +1,23 @@
+@import "../../style/color.scss";
+.mainPage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  .titleBox {
+    display: flex;
+    flex-direction: column;
+    height: 100px;
+    background-color: $white;
+    border-bottom: 1px solid $gray400;
+    font-size: 40px;
+    font-weight: bold;
+    color: $black;
+    .title {
+      margin: auto;
+      .dbName {
+        color: $primary;
+        margin-right: 10px;
+      }
+    }
+  }
+}
