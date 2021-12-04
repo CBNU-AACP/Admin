@@ -1,0 +1,75 @@
+@import "../../style/color.scss";
+.addContainer {
+  display: flex;
+  flex-direction: column;
+  min-width: 840px;
+  height: fit-content;
+  background-color: $white;
+  box-shadow: $box-shadow;
+  border-radius: 10px;
+  margin: 200px auto;
+  padding: 20px;
+  font-weight: bold;
+  .addBox {
+    display: flex;
+    flex-direction: row;
+    background-color: $white;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    margin: 0 0 0 auto;
+    padding: 0;
+    .addCircle {
+      width: 20px;
+      height: 20px;
+      background-color: $adding;
+      border-radius: 50%;
+      margin: auto 5px auto 0;
+    }
+    .table {
+      background-color: $create;
+    }
+    .addText {
+      margin: auto 0;
+      font-weight: bold;
+      font-size: 17px;
+    }
+  }
+  .table {
+    margin-top: 15px;
+  }
+  .tableInputBox {
+    display: flex;
+    flex-direction: row;
+    .tableLabel {
+      margin: auto 0;
+    }
+  }
+  .select,
+  .input {
+    display: inline;
+    border: 2px solid $black;
+    border-radius: 4px;
+    margin: auto 0;
+    color: $black;
+    font-size: 15px;
+    font-weight: bold;
+    &:focus {
+      outline: none;
+    }
+    &::placeholder {
+      color: $black;
+      font-size: 13px;
+    }
+    &::-ms-input-placeholder {
+      color: $black;
+      font-size: 13px;
+    }
+  }
+  .input {
+    max-width: 80px;
+  }
+  .tableInput {
+    margin-left: 11px;
+  }
+}
