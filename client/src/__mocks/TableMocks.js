@@ -2,7 +2,6 @@ const tables = [
   {
     id: 1,
     title: "user",
-    name: "name",
   },
   {
     id: 2,
