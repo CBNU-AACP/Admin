@@ -1,0 +1,32 @@
+@import "../../../style/color.scss";
+.columnBox {
+  display: flex;
+  flex-direction: row;
+  margin: 15px 0 0 0;
+  .cancel {
+    margin: auto auto auto 10px;
+    font-size: 20px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  .column {
+    background-color: $primary;
+    border-radius: 4px;
+    padding: 5px;
+
+    .element {
+      display: inline;
+      margin: 0 5px 0 0;
+      &:last-child {
+        margin-right: 0;
+      }
+      .input {
+        margin-left: 0;
+      }
+      .label {
+        font-size: 14px;
+      }
+    }
+  }
+}
