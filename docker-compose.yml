@@ -1,17 +1,6 @@
 version: "3.1"
 
 services:
-  db:
-    image: mysql
-    restart: always
-    env_file: ./server/.env
-    networks:
-      - compose-networks
-    ports:
-      - "3307:3307"
-    expose:
-      - 3307
-
   admin-web:
     build: 
       context: ./client
@@ -19,8 +8,6 @@ services:
     restart: always
     ports:
       - "3000:3000"
-    depends_on:
-      - db
     networks:
       - compose-networks
 
@@ -31,8 +18,6 @@ services:
     restart: always
     ports:
       - "3001:8080"
-    depends_on:
-      - db
     volumes:
       - /var/lib/admin
     networks:
