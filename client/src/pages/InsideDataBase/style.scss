@@ -1,6 +1,6 @@
 @import "../../style/color.scss";
 .mainPage {
-  position: relative;
+  // position: relative;
   display: flex;
   flex-direction: column;
   .titleBox {
@@ -19,5 +19,14 @@
         margin-right: 10px;
       }
     }
+  }
+  .buttonBar {
+    height: 50px;
+    background-color: $white;
+    border-bottom: 1px solid $gray400;
+  }
+  .mainContent {
+    display: flex;
+    flex-direction: row;
   }
 }
