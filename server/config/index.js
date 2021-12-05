@@ -1,4 +1,5 @@
-const env = require('../env');
+require('dotenv').config();
+const env = process.env;
 
 const development = {
   user: env.MYSQL_USERNAME,
