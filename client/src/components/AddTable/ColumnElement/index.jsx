@@ -10,8 +10,7 @@ export default function ColumnElement({ element, remove }) {
   const [isDisabled, setDisabled] = useState(false);
 
   function pkSelect(isPK) {
-    element.PK = isPK.target.value;
-    console.log(element);
+    element.PK = Boolean(isPK.target.value);
     setDisabled(!isDisabled);
     if (isPK.target.value) {
       element.FK = false;
