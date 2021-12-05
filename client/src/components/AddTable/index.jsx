@@ -28,7 +28,7 @@ export default function AddTable() {
 
   const initialState = {
     columnName: "",
-    dataType: "",
+    dataType: "CHAR",
     constraint: false,
     default: "",
     PK: false,
