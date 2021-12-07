@@ -2,7 +2,7 @@ require('dotenv').config();
 const env = process.env;
 
 const development = {
-  user: env.MYSQL_USERNAME,
+  username: env.MYSQL_USERNAME,
   password: env.MYSQL_PASSWORD,
   database: env.MYSQL_DATABASE,
   host: env.MYSQL_HOST,
@@ -14,7 +14,7 @@ const development = {
 };
 
 const production = {
-  user: env.MYSQL_USERNAME,
+  username: env.MYSQL_USERNAME,
   password: env.MYSQL_PASSWORD,
   database: env.MYSQL_DATABASE,
   host: env.MYSQL_HOST,
@@ -23,7 +23,7 @@ const production = {
 };
 
 const test = {
-  user: env.MYSQL_USERNAME,
+  username: env.MYSQL_USERNAME,
   password: env.MYSQL_PASSWORD,
   database: env.MYSQL_DATABASE_TEST,
   host: env.MYSQL_HOST,
