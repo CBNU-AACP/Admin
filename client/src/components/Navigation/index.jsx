@@ -3,20 +3,23 @@ import cx from "classnames";
 import "./style.scss";
 import { AiOutlineDatabase } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { add } from "../../store/tableSlice";
+import { setTable } from "../../store/tableSlice";
 
 export default function Natigation() {
+  const [isOnClick, setOnclick] = useState(false);
   const dispatch = useDispatch();
   const tables = useSelector(state => state.table.tables);
+  const currentTable = useSelector(state => state.table.currentTable);
 
-  console.log(tables);
   return (
     <nav className="navigation">
       <button
         type="button"
-        className="addTable"
+        className={cx("addTable", {
+          isFocus: currentTable === "createTable",
+        })}
         onClick={() => {
-          dispatch(add(true));
+          dispatch(setTable("createTable"));
         }}>
         <AiOutlineDatabase />
         <p className="addText">테이블 추가</p>
@@ -24,7 +27,15 @@ export default function Natigation() {
       <p className="naviTitle">테이블 목록</p>
       <ul className="sideMenu">
         {tables.map(table => (
-          <li key={table.id + table.title} className="tableTitle">
+          <li
+            key={table.id + table.title}
+            className={cx("tableTitle", {
+              isFocus: table.title === currentTable,
+            })}
+            onClick={() => {
+              dispatch(setTable(table.title));
+            }}
+            aria-hidden="true">
             {table.title}
           </li>
         ))}
