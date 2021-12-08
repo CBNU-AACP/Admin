@@ -5,8 +5,8 @@ import axios from "../common/axios";
 const name = "table";
 
 const initialState = {
-  isAddClick: false,
   tables: [],
+  currentTable: "createTable",
 };
 
 export const tableSlice = createSlice({
@@ -16,11 +16,11 @@ export const tableSlice = createSlice({
     getTables: (state, action) => {
       state.tables = [...action.payload];
     },
-    add: (state, action) => {
-      state.isAddClick = action.payload; // 상태 변경 예시 1
+    setTable: (state, action) => {
+      state.currentTable = action.payload;
     },
   },
   extraReducers: {},
 });
 
-export const { getTables, add } = tableSlice.actions;
+export const { getTables, setTable } = tableSlice.actions;

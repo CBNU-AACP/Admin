@@ -1,0 +1,52 @@
+@import "../../style/color.scss";
+.schemaContainer {
+  display: flex;
+  flex-direction: column;
+  min-width: fit-content;
+  height: fit-content;
+  background-color: $white;
+  box-shadow: $box-shadow;
+  border-radius: 10px;
+  text-align: center;
+  margin: 200px auto;
+  padding: 20px;
+  font-weight: bold;
+  .tableName {
+    margin-bottom: 10px;
+    color: $darkmode;
+    font-size: 23px;
+  }
+  .schemaLabel {
+    font-size: 16px;
+    color: $darkmode;
+    margin-bottom: -5px;
+  }
+  .attribute {
+    width: fit-content;
+    display: flex;
+    flex-direction: row;
+    background-color: $primary;
+    border-radius: 4px;
+    padding: 5px;
+    margin-top: 15px;
+    .attributeLabel {
+      min-width: 120px;
+      width: fit-content;
+      margin: auto 20px auto 0;
+      text-align: left;
+      font-size: 16px;
+      &:first-child {
+        min-width: 160px;
+      }
+      &:nth-child(3) {
+        min-width: 77px;
+      }
+      &:nth-child(4) {
+        min-width: fit-content;
+      }
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}
