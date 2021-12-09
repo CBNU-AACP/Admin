@@ -15,6 +15,7 @@ export const tableSlice = createSlice({
   reducers: {
     getTables: (state, action) => {
       state.tables = [...action.payload];
+      state.currentTable = "createTable";
     },
     setTable: (state, action) => {
       state.currentTable = action.payload;

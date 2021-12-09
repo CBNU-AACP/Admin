@@ -95,7 +95,11 @@ export default function LoginForm() {
 
         <input className="submit" type="submit" value="로그인" />
       </form>
-      <img className="img" alt="Check Mate" src="" />
+      <img
+        className="img"
+        alt="Check Mate"
+        src="https://user-images.githubusercontent.com/62797441/145247515-e5027855-1073-4960-a832-6fba3db17772.png"
+      />
     </main>
   );
 }
