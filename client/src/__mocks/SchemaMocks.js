@@ -21,7 +21,7 @@ const schemaMocks = [
     Null: "YES",
     key: "",
     Default: null,
-    Extra: "",
+    Extra: "UNIQUE",
   },
   {
     Field: "createAt",
@@ -45,7 +45,7 @@ const schemaMocks = [
     Null: "NO",
     key: "FOR",
     Default: null,
-    Extra: "",
+    Extra: "UNIQUE",
   },
 ];
 
