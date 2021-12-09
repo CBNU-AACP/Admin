@@ -32,7 +32,7 @@
       background-color: $macDelete;
     }
     .add {
-      background-color: $adding;
+      background-color: $macblue;
     }
     .text {
       margin: auto 0;
@@ -65,8 +65,8 @@
     font-family: "Nanum Gothic", sans-serif;
     color: $black;
     &:focus {
-      outline: 3px solid $primary;
-      // border-radius: 7px;
+      outline: 3px solid $black;
+      border-radius: 4px;
     }
     &::placeholder {
       transform: translateY(-5px);

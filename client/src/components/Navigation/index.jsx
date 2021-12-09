@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { setTable } from "../../store/tableSlice";
 
 export default function Natigation() {
-  const [isOnClick, setOnclick] = useState(false);
   const dispatch = useDispatch();
   const tables = useSelector(state => state.table.tables);
   const currentTable = useSelector(state => state.table.currentTable);
