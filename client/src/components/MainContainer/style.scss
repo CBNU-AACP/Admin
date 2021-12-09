@@ -1,0 +1,27 @@
+@import "../../style/color.scss";
+.mainContainer {
+  width: calc(100% - 260px);
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  border-radius: 10px;
+  padding: 30px;
+  font-weight: bold;
+  .selector {
+    margin: auto auto auto 0;
+    .selectTag {
+      margin-right: 30px;
+      font-size: 25px;
+      &:last-child {
+        margin-right: 0;
+      }
+      &:hover {
+        color: $primary;
+        cursor: pointer;
+      }
+    }
+  }
+  .isFocus {
+    color: $primary;
+  }
+}
