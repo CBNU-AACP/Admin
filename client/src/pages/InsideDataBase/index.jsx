@@ -26,7 +26,7 @@ export default function InsideDataBase(props) {
           <span>DB 조회</span>
         </div>
       </header>
-      <section className="buttonBar"></section>
+      {/* <section className="buttonBar"></section> */}
       <main className="mainContent">
         <Navigation />
         {currentTable === "createTable" ? (
