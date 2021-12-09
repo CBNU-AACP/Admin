@@ -8,7 +8,24 @@ export default function AddTable() {
   const [columns, setColumns] = useState([]);
   const nextId = useRef(1);
 
+  const initialState = {
+    columnName: "",
+    dataType: "CHAR",
+    constraint: false,
+    default: "",
+    PK: false,
+    FK: false,
+  };
+
   let isNullColumnName = true;
+
+  useEffect(() => {
+    for (let i = 0; i < 3; i += 1) {
+      columns.push({ id: nextId.current, ...initialState });
+      nextId.current += 1;
+    }
+    setColumns([...columns]);
+  }, []);
 
   const removeColumn = remove => {
     setColumns(columns.filter(column => column.id !== remove));
@@ -23,16 +40,7 @@ export default function AddTable() {
       if (column.columnName.length !== 0) isNullColumnName = false;
     });
     if (tableName.length >= 1 && !isNullColumnName)
-      console.log({ tableName, ...columns });
-  };
-
-  const initialState = {
-    columnName: "",
-    dataType: "CHAR",
-    constraint: false,
-    default: "",
-    PK: false,
-    FK: false,
+      console.log({ tableName, ...columns }); // 데이터 전송 api 연결
   };
 
   return (
