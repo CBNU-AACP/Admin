@@ -8,7 +8,7 @@
   box-shadow: $box-shadow;
   border-radius: 10px;
   text-align: center;
-  margin: 200px auto;
+  margin: 150px auto;
   padding: 20px;
   font-weight: bold;
   .tableName {
@@ -45,6 +45,7 @@
         min-width: fit-content;
       }
       &:last-child {
+        min-width: fit-content;
         margin-right: 0;
       }
     }

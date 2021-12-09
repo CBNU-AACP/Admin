@@ -8,6 +8,7 @@ import AddTable from "../../components/AddTable";
 import TableMocks from "../../__mocks/TableMocks";
 import { getTables } from "../../store/tableSlice";
 import Schema from "../../components/Schema";
+import MainContainer from "../../components/MainContainer";
 
 export default function InsideDataBase(props) {
   const { dbName } = useParams();
@@ -26,14 +27,9 @@ export default function InsideDataBase(props) {
           <span>DB 조회</span>
         </div>
       </header>
-      {/* <section className="buttonBar"></section> */}
       <main className="mainContent">
         <Navigation />
-        {currentTable === "createTable" ? (
-          <AddTable />
-        ) : (
-          <Schema table={currentTable} />
-        )}
+        {currentTable === "createTable" ? <AddTable /> : <MainContainer />}
       </main>
     </div>
   );
