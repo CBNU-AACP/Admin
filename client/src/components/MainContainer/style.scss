@@ -6,7 +6,6 @@
   height: fit-content;
   border-radius: 10px;
   padding: 30px;
-  font-weight: bold;
   .selector {
     margin: auto auto auto 0;
     .selectTag {
@@ -17,11 +16,13 @@
       }
       &:hover {
         color: $primary;
+        font-weight: bold;
         cursor: pointer;
       }
     }
   }
   .isFocus {
     color: $primary;
+    font-weight: bold;
   }
 }
