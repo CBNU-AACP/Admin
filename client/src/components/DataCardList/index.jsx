@@ -1,22 +1,33 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import cx from "classnames";
+import { IoAddOutline } from "react-icons/io5";
 import DataMocks from "../../__mocks/DataMocks";
 import DataCard from "./DataCard";
 import axios from "../../common/axios";
 import "./style.scss";
 
 export default function DataCardList() {
-  const [dataList, setDataList] = useState(DataMocks); // thunk api로 대체
+  const [dataList, setDataList] = useState(
+    DataMocks.map((data, idx) => ({ id: idx + 1, ...data })),
+  ); // thunk api로 대체
   const nextId = useRef(dataList.length + 1);
   const currentTable = useSelector(state => state.table.currentTable);
+  const currentSchema = useSelector(state => state.table.currentSchema);
+
+  const addData = data => {
+    // thunk api 연결
+    console.log(data);
+  };
 
   const removeData = remove => {
+    // api 연동
     setDataList(dataList.filter(db => db.id !== remove));
   };
 
   const newData = () => {
-    setDataList([...dataList, { id: nextId.current, name: "" }]);
+    // api 연동
+    setDataList([...dataList, { id: nextId.current, ...currentSchema }]);
     nextId.current += 1;
   };
 
@@ -26,10 +37,11 @@ export default function DataCardList() {
       <div className="dataList">
         {dataList.map(data => (
           <DataCard
-            isNew={data.name === ""}
+            isNew={DataMocks.length < data.id}
             data={data}
-            key={data}
+            key={data + data.id}
             id={data.id}
+            add={addData}
             remove={removeData}
           />
         ))}
@@ -39,8 +51,7 @@ export default function DataCardList() {
         type="button"
         onClick={newData}
         aria-hidden="true">
-        <div className="create" />
-        <p className="createText">DB 추가하기</p>
+        <IoAddOutline className="createText" />
       </button>
     </>
   );
