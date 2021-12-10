@@ -23,6 +23,6 @@ module.exports = class RefreshToken extends Sequelize.Model {
   }
 
   static associate(db) {
-    db.RefreshToken.belongsTo(db.User, {foreignKey: "userId", targetKey: "id"});
+    db.RefreshToken.belongsTo(db.User, {foreignKey: "uid", targetKey: "id"});
   }
 };
