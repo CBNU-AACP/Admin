@@ -2,19 +2,17 @@ import React, { useContext, useState, useEffect, useRef } from "react";
 import cx from "classnames";
 import { useSelector } from "react-redux";
 import "./style.scss";
-import schemaMocks from "../../__mocks/SchemaMocks";
 
 export default function Schema() {
   const currentTable = useSelector(state => state.table.currentTable);
-
-  useEffect(() => {}, [currentTable]); // api 요청
+  const currentSchemaData = useSelector(state => state.table.currentSchemaData);
 
   return (
     <div className="schemaContainer">
       <p className="tableName">{currentTable} 테이블</p>
       <p className="schemaLabel">스키마 조회</p>
       <ul>
-        {schemaMocks.map(attribute => (
+        {currentSchemaData.map(attribute => (
           <li key={attribute.Field + attribute.Null}>
             <form className="attribute">
               <span className="attributeLabel"># {attribute.Field}</span>
