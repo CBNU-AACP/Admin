@@ -14,7 +14,7 @@
   }
   &:hover {
     padding: 2px;
-    border: 3px solid $primary;
+    border: 3px solid $darkmode;
   }
   .btnBox {
     display: flex;
@@ -65,13 +65,12 @@
     font-family: "Nanum Gothic", sans-serif;
     color: $black;
     &:focus {
-      outline: 3px solid $black;
+      outline: 2px solid $black;
       border-radius: 4px;
     }
     &::placeholder {
       transform: translateY(-5px);
       vertical-align: middle;
-      color: $black;
       font-size: 12px;
     }
     &::-ms-input-placeholder {
