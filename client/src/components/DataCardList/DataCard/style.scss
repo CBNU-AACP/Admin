@@ -1,0 +1,96 @@
+@import "../../../style/color.scss";
+.dataCard {
+  width: 400px;
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  background-color: $white;
+  border-radius: 10px;
+  box-shadow: $box-shadow;
+  margin: 30px;
+  padding: 5px;
+  //   .addBox {
+  //     margin: 0 5px 0 auto;
+  //   }
+  &:hover {
+    padding: 2px;
+    border: 3px solid $black;
+  }
+  .btnBox {
+    display: flex;
+    flex-direction: row;
+    .circle {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      margin: 5px;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    .drop {
+      background-color: $macDelete;
+    }
+    .add {
+      background-color: $macblue;
+    }
+    .text {
+      margin: auto 0;
+      font-size: 15px;
+      font-weight: bold;
+    }
+    .dataText {
+      margin: 5px 5px 5px auto;
+      font-size: 20px;
+      font-weight: bold;
+    }
+  }
+  .attributeList {
+    margin-left: 8px;
+    padding-bottom: 5px;
+    .attribute {
+      width: fit-content;
+      border: 2px solid $primary;
+      border-radius: 8px;
+      padding: 5px;
+      margin-top: 15px;
+      font-size: 16px;
+      word-break: break-all;
+    }
+  }
+
+  //   .cardText {
+  //     margin: auto;
+  //     margin-top: 30px;
+  //     text-align: center;
+  //     font-size: 30px;
+  //     font-weight: bold;
+  //     color: $black;
+  //     &:hover {
+  //       cursor: pointer;
+  //     }
+  //   }
+  //   .input {
+  //     width: 200px;
+  //     height: 30px;
+  //     border: none;
+  //     padding: 0;
+  //     font-family: "Nanum Gothic", sans-serif;
+  //     color: $black;
+  //     &:focus {
+  //       outline: 3px solid $black;
+  //       border-radius: 4px;
+  //     }
+  //     &::placeholder {
+  //       transform: translateY(-5px);
+  //       vertical-align: middle;
+  //       color: $black;
+  //       font-size: 12px;
+  //     }
+  //     &::-ms-input-placeholder {
+  //       transform: translateY(-5px);
+  //       vertical-align: middle;
+  //       font-size: 12px;
+  //     }
+  //   }
+}
