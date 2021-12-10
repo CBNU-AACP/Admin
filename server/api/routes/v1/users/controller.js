@@ -59,6 +59,7 @@ const logout = async(req,res,next) => {
   const {params: {userId}} = req;
   try {
     const user = await User.findOne({where: {userId}});
+    if(!user) return next(INVALID_ID);
     const refreshToken = await RefreshToken.destroy({where: {uid: user.id}});  //db에서 trainer와 연결된 refreshToken 제거
     if(!refreshToken)
       return next(ALREADY_LOGGED_OUT);
@@ -74,7 +75,7 @@ const logout = async(req,res,next) => {
 const resetPassword = async(req,res,next) => {
   const { userId, userPassword } = req.body;
   try {
-    const user = await user.findOne({where: {userId}});
+    const user = await User.findOne({where: {userId}});
     if(!user) return next(INVALID_ID);
     const same = bcrypt.compareSync(userPassword, user.userPassword);
     if(same)  //기존의 비밀번호와 동일한 비밀번호는 아닌지 검사
@@ -93,7 +94,7 @@ const resetPassword = async(req,res,next) => {
   }
 };
 
-const test = async(req,res,next) => {
+const test = async(req,res,next) => { //토큰 잘 사용되는지 확인해보고 싶을 때 테스트용으로 사용하세요!, 필요 없으면 나중 커밋 때 지워놓을게요.  
   try {
     console.log("성 공 적");
     console.log("이것은 Access");
