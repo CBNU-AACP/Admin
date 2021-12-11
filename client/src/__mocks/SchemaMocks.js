@@ -1,17 +1,17 @@
 const schemaMocks = [
   {
-    Field: "name",
-    Type: "varchar(20)",
-    Null: "NO",
-    key: "",
-    Default: null,
-    Extra: "",
-  },
-  {
     Field: "courseId",
     Type: "varchar(20)",
     Null: "NO",
     key: "PRI",
+    Default: null,
+    Extra: "",
+  },
+  {
+    Field: "name",
+    Type: "varchar(20)",
+    Null: "NO",
+    key: "",
     Default: null,
     Extra: "",
   },
