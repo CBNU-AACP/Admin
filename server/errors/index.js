@@ -19,6 +19,7 @@ const errors = {
     COLUMN_EXISTED: [401, 'Column이 이미 존재합니다'],
     FK_NOT_DEFINED: [401, 'FK로 하려는 테이블의 PK가 존재하지않습니다'],
     PK_EXISTED: [401, 'primary key가 이미 존재합니다'],
+    TABLE_NOT_EXISTED: [401, 'Table이 존재하지 않습니다'],
   
     // 403 Errors
     JSON_WEB_TOKEN_ERROR : [403, '권한이 없는 요청입니다.'],
