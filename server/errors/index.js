@@ -16,6 +16,9 @@ const errors = {
   
     // 401 Errors
     LOGIN_REQUIRED: [401, '로그인이 필요합니다.'],
+    COLUMN_EXISTED: [401, 'Column이 이미 존재합니다'],
+    FK_NOT_DEFINED: [401, 'FK로 하려는 테이블의 PK가 존재하지않습니다'],
+    PK_EXISTED: [401, 'primary key가 이미 존재합니다'],
   
     // 403 Errors
     JSON_WEB_TOKEN_ERROR : [403, '권한이 없는 요청입니다.'],
@@ -26,6 +29,7 @@ const errors = {
     DUPLICATED_PASSWORD: [404, '기존과 동일한 패스워드입니다.'],
     NOT_FOUND: [404, '찾을 수 없는 요청입니다.'],
     
+
     // 500 Errors
     SERVER_ERROR: [500, '서버 에러.'],
 };
