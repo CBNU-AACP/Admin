@@ -5,13 +5,14 @@
   margin: 15px 0 0 0;
   .cancel {
     margin: auto auto auto 10px;
-    font-size: 20px;
+    font-size: 22px;
     &:hover {
+      color: $macDelete;
       cursor: pointer;
     }
   }
   .column {
-    background-color: $primary;
+    border: 1px solid $gray400;
     border-radius: 4px;
     padding: 5px;
 

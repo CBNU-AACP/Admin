@@ -7,15 +7,24 @@ export default function Schema() {
   const currentTable = useSelector(state => state.table.currentTable);
   const currentSchemaData = useSelector(state => state.table.currentSchemaData);
 
+  const remove = () => {
+    // currentTable을 파라미터로 보낸다.
+    console.log(currentTable);
+  };
+
   return (
     <div className="schemaContainer">
-      <p className="tableName">{currentTable} 테이블</p>
+      <div className="btnBox">
+        <div className="circle drop" onClick={remove} aria-hidden="true" />
+        <p className="text">삭제</p>
+      </div>
+      <p className="tableName bold">{currentTable} 테이블</p>
       <p className="schemaLabel">스키마 조회</p>
       <ul>
         {currentSchemaData.map(attribute => (
           <li key={attribute.Field + attribute.Null}>
             <form className="attribute">
-              <span className="attributeLabel"># {attribute.Field}</span>
+              <span className="attributeLabel bold">{attribute.Field}</span>
               <span className="attributeLabel">
                 {attribute.Type.toUpperCase()}
               </span>
@@ -28,7 +37,7 @@ export default function Schema() {
                 </span>
               )}
               {attribute.key && (
-                <span className="attributeLabel">
+                <span className="attributeLabel bold">
                   {attribute.key === "PRI" ? "PRIMARY KEY" : "FOREIGN KEY"}
                 </span>
               )}

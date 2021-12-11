@@ -10,9 +10,33 @@
   text-align: center;
   margin: 150px auto;
   padding: 20px;
-  font-weight: bold;
+  .btnBox {
+    position: absolute;
+    display: flex;
+    .circle {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      margin: 5px;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    .drop {
+      background-color: $macDelete;
+    }
+    .text {
+      margin: auto 0;
+      color: $darkmode;
+      font-size: 15px;
+      font-weight: bold;
+    }
+  }
+  .bold {
+    font-weight: bold;
+  }
   .tableName {
-    margin-bottom: 10px;
+    margin: 0 auto 10px auto;
     color: $darkmode;
     font-size: 23px;
   }
@@ -25,7 +49,7 @@
     width: fit-content;
     display: flex;
     flex-direction: row;
-    background-color: $primary;
+    border: 1px solid $gray400;
     border-radius: 4px;
     padding: 5px;
     margin-top: 15px;
