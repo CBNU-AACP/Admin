@@ -14,7 +14,7 @@ const poolQuery = ((q)=>{
             const doc = await pool.query(`${q}`);
             resolve(doc);
         } catch (error) {
-            reject(error);           
+            reject(error);
         }
     })
 })
