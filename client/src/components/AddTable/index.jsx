@@ -40,7 +40,7 @@ export default function AddTable() {
       if (column.columnName.length !== 0) isNullColumnName = false;
     });
     if (tableName.length >= 1 && !isNullColumnName)
-      console.log({ tableName, ...columns }); // 데이터 전송 api 연결
+      console.log({ tableName, column: [...columns] }); // 데이터 전송 api 연결
   };
 
   return (

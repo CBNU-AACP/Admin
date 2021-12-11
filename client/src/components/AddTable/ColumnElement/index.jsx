@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import React, { useContext, useState, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
-import { GiCancel } from "react-icons/gi";
+import { MdOutlineCancel } from "react-icons/md";
 import cx from "classnames";
 import "./style.scss";
 
@@ -24,7 +24,7 @@ export default function ColumnElement({ element, remove }) {
     <div className="columnBox">
       <form className="column">
         <div className="element">
-          <span className="label"># 컬럼명: </span>
+          <span className="label">컬럼명: </span>
           <input
             className="input"
             type="text"
@@ -71,7 +71,7 @@ export default function ColumnElement({ element, remove }) {
           </select>
         </div>
 
-        <div className="element">
+        {/* <div className="element">
           <span className="label">DEFAULT값: </span>
           <input
             className="input"
@@ -81,7 +81,7 @@ export default function ColumnElement({ element, remove }) {
               element.default = e.target.value;
             }}
           />
-        </div>
+        </div> */}
 
         <div className="element">
           <span className="label">PK: </span>
@@ -118,7 +118,7 @@ export default function ColumnElement({ element, remove }) {
           </select>
         </div>
       </form>
-      <GiCancel className="cancel" onClick={() => remove(element.id)} />
+      <MdOutlineCancel className="cancel" onClick={() => remove(element.id)} />
     </div>
   );
 }

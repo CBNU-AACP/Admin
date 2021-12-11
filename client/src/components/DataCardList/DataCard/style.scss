@@ -59,10 +59,10 @@
       font-size: 16px;
       word-break: break-all;
       .input {
+        line-height: 16px;
         border: none;
         border-radius: 6px;
         color: $black;
-        padding: 0;
         font-size: 15px;
         &:focus {
           outline: none;

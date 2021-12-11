@@ -2,7 +2,7 @@
 .addContainer {
   display: flex;
   flex-direction: column;
-  min-width: 840px;
+  min-width: fit-content;
   height: fit-content;
   background-color: $white;
   box-shadow: $box-shadow;
@@ -47,13 +47,13 @@
   }
   .select,
   .input {
+    line-height: 17px;
     display: inline;
-    border: 2px solid $black;
+    border: 1px solid $gray400;
     border-radius: 4px;
     margin: auto 0;
     color: $black;
     font-size: 15px;
-    font-weight: bold;
     &:focus {
       outline: none;
     }
