@@ -1,6 +1,6 @@
 @import "../../../style/color.scss";
 .dataCard {
-  width: 350px;
+  width: 500px;
   height: fit-content;
   display: flex;
   flex-direction: column;
@@ -10,7 +10,7 @@
   margin: 30px;
   padding: 5px;
   .addBox {
-    margin: 0 5px 0 auto;
+    margin: -10px 10px 0 auto;
   }
   &:hover {
     padding: 2px;
@@ -23,7 +23,8 @@
       width: 20px;
       height: 20px;
       border-radius: 50%;
-      margin: 5px;
+      margin: 10px;
+      margin-right: 5px;
       &:hover {
         cursor: pointer;
       }
@@ -37,11 +38,11 @@
     .text {
       margin: auto 0;
       color: $darkmode;
-      font-size: 15px;
+      font-size: 17px;
       font-weight: bold;
     }
     .dataText {
-      margin: 5px 5px 5px auto;
+      margin: 10px 10px 10px auto;
       color: $darkmode;
       font-size: 20px;
       font-weight: bold;
@@ -50,26 +51,26 @@
   .attributeList {
     border-collapse: collapse;
     border: 1px solid $gray400;
-    margin: 5px;
+    margin: 10px;
+    margin-top: 0px;
     padding-bottom: 5px;
     .attribute {
       width: fit-content;
       border: 1px solid $gray400;
       padding: 5px;
-      font-size: 16px;
+      font-size: 18px;
       word-break: break-all;
       .input {
-        line-height: 16px;
+        line-height: 19px;
         border: none;
         border-radius: 6px;
-        color: $black;
-        font-size: 15px;
+        color: $darkmode;
+        font-size: 18px;
         &:focus {
           outline: none;
         }
         &::placeholder {
-          font-size: 13px;
-          font-weight: none;
+          font-size: 15px;
         }
         &::-ms-input-placeholder {
           font-size: 13px;

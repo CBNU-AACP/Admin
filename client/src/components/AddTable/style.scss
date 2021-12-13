@@ -8,8 +8,8 @@
   box-shadow: $box-shadow;
   border-radius: 10px;
   margin: 200px auto;
-  padding: 20px;
-  font-weight: bold;
+  padding: 15px;
+  font-size: 18px;
   .addBox {
     display: flex;
     flex-direction: row;
@@ -32,7 +32,7 @@
     .addText {
       margin: auto 0;
       font-weight: bold;
-      font-size: 17px;
+      font-size: 18px;
     }
   }
   .table {
@@ -43,6 +43,7 @@
     flex-direction: row;
     .tableLabel {
       margin: auto 0;
+      font-weight: bold;
     }
   }
   .select,
@@ -53,21 +54,21 @@
     border-radius: 4px;
     margin: auto 0;
     color: $black;
-    font-size: 15px;
+    font-size: 17px;
     &:focus {
       outline: none;
     }
     &::placeholder {
-      font-size: 12px;
+      font-size: 15px;
       font-weight: 400;
     }
     &::-ms-input-placeholder {
-      font-size: 12px;
+      font-size: 15px;
       font-weight: 400;
     }
   }
   .input {
-    max-width: 80px;
+    max-width: 150px;
   }
   .tableInput {
     margin-left: 11px;

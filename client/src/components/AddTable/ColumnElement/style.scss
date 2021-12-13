@@ -15,10 +15,9 @@
     border: 1px solid $gray400;
     border-radius: 4px;
     padding: 5px;
-
     .element {
       display: inline;
-      margin: 0 5px 0 0;
+      margin: 0 30px 0 0;
       &:last-child {
         margin-right: 0;
       }
@@ -26,7 +25,10 @@
         margin-left: 0;
       }
       .label {
-        font-size: 14px;
+        font-size: 17px;
+      }
+      .bold {
+        font-weight: bold;
       }
     }
   }

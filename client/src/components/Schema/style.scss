@@ -28,7 +28,7 @@
     .text {
       margin: auto 0;
       color: $darkmode;
-      font-size: 15px;
+      font-size: 18px;
       font-weight: bold;
     }
   }
@@ -38,19 +38,19 @@
   .tableName {
     margin: 0 auto 10px auto;
     color: $darkmode;
-    font-size: 23px;
+    font-size: 25px;
   }
   .schemaLabel {
-    font-size: 16px;
+    font-size: 17px;
     color: $darkmode;
-    margin-bottom: -5px;
+    margin-bottom: 10px;
   }
   .attribute {
-    width: fit-content;
+    // width: fit-content;
     display: flex;
     flex-direction: row;
-    border: 1px solid $gray400;
-    border-radius: 4px;
+    border-bottom: 1px solid $gray400;
+    // border-radius: 4px;
     padding: 5px;
     margin-top: 15px;
     .attributeLabel {
@@ -58,7 +58,7 @@
       width: fit-content;
       margin: auto 20px auto 0;
       text-align: left;
-      font-size: 16px;
+      font-size: 17px;
       &:first-child {
         min-width: 160px;
       }

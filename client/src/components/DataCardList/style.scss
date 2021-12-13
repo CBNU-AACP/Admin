@@ -6,10 +6,10 @@
 }
 .dataList {
   min-width: 800px;
+  min-height: fit-content;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  min-height: fit-content;
   margin: 50px auto;
   padding: 20px;
 }
