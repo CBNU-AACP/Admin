@@ -27,15 +27,15 @@ export default function Natigation() {
       <ul className="sideMenu">
         {tables.map(table => (
           <li
-            key={table.id + table.title}
+            key={table}
             className={cx("tableTitle", {
               isFocus: table.title === currentTable,
             })}
             onClick={() => {
-              dispatch(setTable(table.title));
+              dispatch(setTable(table));
             }}
             aria-hidden="true">
-            {table.title}
+            {table}
           </li>
         ))}
       </ul>

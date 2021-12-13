@@ -1,13 +1,34 @@
+/* eslint-disable eqeqeq */
 import React, { useState, useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import cx from "classnames";
 import DataBasesMocks from "../../__mocks/DataBasesMocks";
 import DataBase from "./DbCard";
-import http from "../../common/axios";
+import { getDataBases } from "../../store/dbSlice";
 import "./style.scss";
 
 export default function DataBases() {
-  const [dbData, setDBData] = useState(DataBasesMocks);
-  const nextId = useRef(dbData.length + 1);
+  const dispatch = useDispatch();
+  const [dbData, setDBData] = useState([]);
+  const nextId = useRef(0);
+  const databases = useSelector(state => state.database.databases);
+
+  useEffect(() => {
+    dispatch(getDataBases()).then(res => {
+      console.log(res);
+      setDBData(
+        res.payload.map(db => {
+          nextId.current += 1;
+          console.log(nextId.current);
+          return { id: nextId.current, name: db };
+        }),
+      );
+    });
+  }, []);
+
+  useEffect(() => {
+    console.log(dbData);
+  }, [dbData]);
 
   const addDb = (id, name) => {
     // api 연결
@@ -19,11 +40,11 @@ export default function DataBases() {
   };
 
   const newDb = () => {
-    setDBData([...dbData, { id: nextId.current, name: "" }]);
     nextId.current += 1;
+    setDBData([...dbData, { id: nextId.current, name: "" }]);
   };
 
-  return (
+  return dbData.length != 0 ? (
     <>
       <div className="dbList">
         {dbData.map(database => (
@@ -46,5 +67,7 @@ export default function DataBases() {
         <p className="createText">DB 추가하기</p>
       </button>
     </>
+  ) : (
+    <div>Loading..</div>
   );
 }
