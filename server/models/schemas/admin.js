@@ -27,6 +27,6 @@ module.exports = class Admin extends Sequelize.Model {
   }
 
   static associate(db) {
-    db.User.hasOne(db.RefreshToken, {foreignKey: "uid", sourceKey: "id"});
+    db.Admin.hasOne(db.RefreshToken, {foreignKey: "uid", sourceKey: "id"});
   }
 };
