@@ -19,9 +19,9 @@ const schemaMocks = [
     Field: "description",
     Type: "text",
     Null: "YES",
-    key: "",
+    key: "UNI",
     Default: null,
-    Extra: "UNIQUE",
+    Extra: "",
   },
   {
     Field: "createAt",
@@ -43,9 +43,9 @@ const schemaMocks = [
     Field: "userId",
     Type: "varchar(20)",
     Null: "NO",
-    key: "FOR",
+    key: "MUL",
     Default: null,
-    Extra: "UNIQUE",
+    Extra: "",
   },
 ];
 
