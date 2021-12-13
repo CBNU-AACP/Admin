@@ -4,15 +4,21 @@ import { useSelector } from "react-redux";
 import "./style.scss";
 
 export default function Schema() {
+  const [isLoading, setLoading] = useState(true);
   const currentTable = useSelector(state => state.table.currentTable);
   const currentSchemaData = useSelector(state => state.table.currentSchemaData);
+  const { original } = currentSchemaData;
 
   const remove = () => {
     // currentTable을 파라미터로 보낸다.
     console.log(currentTable);
   };
 
-  return (
+  useEffect(() => {
+    if (original) setLoading(false);
+  }, [original]);
+
+  return !isLoading ? (
     <div className="schemaContainer">
       <div className="btnBox">
         <div className="circle drop" onClick={remove} aria-hidden="true" />
@@ -21,7 +27,7 @@ export default function Schema() {
       <p className="tableName bold">{currentTable} 테이블</p>
       <p className="schemaLabel">스키마 조회</p>
       <ul>
-        {currentSchemaData.map(attribute => (
+        {original.map(attribute => (
           <li key={attribute.Field + attribute.Null}>
             <form className="attribute">
               <span className="attributeLabel bold">{attribute.Field}</span>
@@ -49,5 +55,7 @@ export default function Schema() {
         ))}
       </ul>
     </div>
+  ) : (
+    <div>Loading..</div>
   );
 }

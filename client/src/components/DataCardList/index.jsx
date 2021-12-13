@@ -8,12 +8,18 @@ import axios from "../../common/axios";
 import "./style.scss";
 
 export default function DataCardList() {
+  const [isLoading, setLoading] = useState(true);
   const [dataList, setDataList] = useState(
     DataMocks.map((data, idx) => ({ id: idx + 1, ...data })),
   ); // thunk api로 대체
   const nextId = useRef(dataList.length + 1);
   const currentTable = useSelector(state => state.table.currentTable);
-  const currentSchema = useSelector(state => state.table.currentSchema);
+  const currentSchemaData = useSelector(state => state.table.currentSchemaData);
+  const { attributes } = currentSchemaData;
+
+  useEffect(() => {
+    if (attributes) setLoading(false);
+  }, [attributes]);
 
   const addData = data => {
     // thunk api 연결
@@ -27,11 +33,11 @@ export default function DataCardList() {
 
   const newData = () => {
     // api 연동
-    setDataList([...dataList, { id: nextId.current, ...currentSchema }]);
+    setDataList([...dataList, { id: nextId.current, ...attributes }]);
     nextId.current += 1;
   };
 
-  return (
+  return !isLoading ? (
     <>
       <h2 className="dataListTitle">{currentTable} 테이블의 데이터 목록</h2>
       <div className="dataList">
@@ -54,5 +60,7 @@ export default function DataCardList() {
         <IoAddOutline className="createText" />
       </button>
     </>
+  ) : (
+    <div>Loading..</div>
   );
 }

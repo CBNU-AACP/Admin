@@ -2,8 +2,8 @@ import React, { useContext, useState, useEffect, useRef } from "react";
 import cx from "classnames";
 import { useDispatch, useSelector } from "react-redux";
 import SchemaMocks from "../../__mocks/SchemaMocks";
-import { getCurrentSchemaData, setCurrentSchema } from "../../store/tableSlice";
-import dataToSchema from "../../utils/dataToSchema";
+import { setCurrentSchemaData } from "../../store/tableSlice";
+import { dataToKey, dataToSchema } from "../../utils";
 import Schema from "../Schema";
 import "./style.scss";
 import DataCardList from "../DataCardList";
@@ -15,8 +15,13 @@ export default function mainContainer() {
 
   useEffect(() => {
     setMenuSelect("schema");
-    dispatch(getCurrentSchemaData(SchemaMocks)); // 스키마 데이터 thunk api 요청
-    dispatch(setCurrentSchema(dataToSchema(SchemaMocks))); // 스키마 데이터 가져오고 나서 스키마 field영역만 디스패치
+    dispatch(
+      setCurrentSchemaData({
+        original: SchemaMocks,
+        attributes: dataToSchema(SchemaMocks),
+        schemaKey: dataToKey(SchemaMocks),
+      }),
+    );
   }, [currentTable]); // schema thunk api 요청
 
   return (

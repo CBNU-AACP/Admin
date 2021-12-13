@@ -69,7 +69,7 @@ export default function DataBase({ isNew, database, id, remove, add }) {
               }}
               aria-hidden="true"
             />
-            <p className="text">추가</p>
+            <p className="text">완료</p>
           </div>
         </>
       ) : (
