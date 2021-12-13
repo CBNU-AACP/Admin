@@ -1,4 +1,4 @@
-const { User, RefreshToken } = require('../../../../models');
+const { Admin, RefreshToken } = require('../../../../models');
 const { createResponse } = require('../../../../utils/response');
 const { ALREADY_LOGGED_OUT, DUPLICATED_ID, DUPLICATED_PASSWORD, INVALID_ID, INVALID_FORMAT_PASSWORD, INVALID_PASSWORD } = require('../../../../errors');
 const { SALT_ROUNDS, JWT_SECRET_KEY_FILE } = require('../../../../env');
@@ -10,13 +10,13 @@ const { join } = require('path');
 const register = async(req,res,next) => {
   const {body: {userId, userPassword}} = req;
   try {
-    const duplicateTest = await User.findOne({where: {userId}});
+    const duplicateTest = await Admin.findOne({where: {userId}});
     if(duplicateTest) //기존에 동일한 아이디를 가지는 회원이 있는지 검사
       return next(DUPLICATED_ID);
     if(userPassword.search(/^[A-Za-z0-9]{6,12}$/) == -1) //비밀번호가 대소문자 알파벳,숫자 6~12자로 이루어져 있는지 검사 
       return next(INVALID_FORMAT_PASSWORD);
     req.body.userPassword = bcrypt.hashSync(userPassword, parseInt(SALT_ROUNDS));
-    const user = await User.create(req.body);
+    const user = await Admin.create(req.body);
     return res.json(createResponse(res, user));
   } catch (error) {
     console.error(error);
@@ -28,7 +28,7 @@ const login = async(req,res,next) => {
   // const JWT_SECRET_KEY = fs.readFileSync(join(__dirname, '../../../../keys/', JWT_SECRET_KEY_FILE));
   const { userId, userPassword } = req.body;
   try {
-    const user = await User.findOne({where: {userId}});
+    const user = await Admin.findOne({where: {userId}});
     if(!user) return next(INVALID_ID);
     const same = bcrypt.compareSync(userPassword, user.userPassword);
     if(!same)
@@ -41,7 +41,7 @@ const login = async(req,res,next) => {
     }
     else {
       const token = await RefreshToken.create({refreshToken});
-      await token.setUser(user);  //저장 후 올바른 Trainer 인스턴스와 관계 맺어주기
+      await token.setAdmin(user);  //저장 후 올바른 Trainer 인스턴스와 관계 맺어주기
     }
 
     const accessToken = await jwt.sign({uid: user.id}, JWT_SECRET_KEY_FILE, {algorithm: 'HS512', expiresIn: '1h'});  //accessToken 생성 
@@ -58,7 +58,7 @@ const login = async(req,res,next) => {
 const logout = async(req,res,next) => {
   const {params: {userId}} = req;
   try {
-    const user = await User.findOne({where: {userId}});
+    const user = await Admin.findOne({where: {userId}});
     if(!user) return next(INVALID_ID);
     const refreshToken = await RefreshToken.destroy({where: {uid: user.id}});  //db에서 trainer와 연결된 refreshToken 제거
     if(!refreshToken)
@@ -75,7 +75,7 @@ const logout = async(req,res,next) => {
 const resetPassword = async(req,res,next) => {
   const { userId, userPassword } = req.body;
   try {
-    const user = await User.findOne({where: {userId}});
+    const user = await Admin.findOne({where: {userId}});
     if(!user) return next(INVALID_ID);
     const same = bcrypt.compareSync(userPassword, user.userPassword);
     if(same)  //기존의 비밀번호와 동일한 비밀번호는 아닌지 검사
