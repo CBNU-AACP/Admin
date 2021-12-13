@@ -39,12 +39,14 @@ export default function Schema() {
               </span>
               {attribute.Default && (
                 <span className="attributeLabel">
-                  DEFAULT: {attribute.Default}
+                  DEFAULT {attribute.Default}
                 </span>
               )}
-              {attribute.key && (
+              {attribute.Key && (
                 <span className="attributeLabel bold">
-                  {attribute.key === "PRI" ? "PRIMARY KEY" : "FOREIGN KEY"}
+                  {attribute.Key === "PRI" && "PRIMARY KEY"}
+                  {attribute.Key === "MUL" && "FOREIGN KEY"}
+                  {attribute.Key === "UNI" && "UNIQUE"}
                 </span>
               )}
               {attribute.Extra && (
