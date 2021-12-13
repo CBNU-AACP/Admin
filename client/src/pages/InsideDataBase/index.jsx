@@ -10,13 +10,14 @@ import { getTables } from "../../store/tableSlice";
 import Schema from "../../components/Schema";
 import MainContainer from "../../components/MainContainer";
 
-export default function InsideDataBase(props) {
+export default function InsideDataBase() {
   const { dbName } = useParams();
   const dispatch = useDispatch();
   const currentTable = useSelector(state => state.table.currentTable);
 
   useEffect(() => {
-    dispatch(getTables(TableMocks));
+    // dispatch(getTables(TableMocks));
+    dispatch(getTables());
   }, [dbName]);
 
   return (
