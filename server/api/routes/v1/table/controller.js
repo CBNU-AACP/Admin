@@ -17,6 +17,22 @@ const showTables = async(req,res,next)=>{
     }
 }
 
+const descTable = async(req,res,next)=>{
+    const {name} = req.params;
+    try {
+        const q = `DESC ${name}`;
+        let doc = await poolQuery(q);
+        doc = doc[0].map(item=>{
+            delete item.Extra
+            return item;
+        });
+        return res.json(createResponse(res,doc));
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+}
+
 const createTable = async(req,res,next)=>{
     const body = req.body;
     try {
@@ -50,4 +66,4 @@ const dropTable = async(req,res,next)=>{
         next(error);
     }
 }
-module.exports = {showTables, createTable, dropTable}
+module.exports = {showTables, createTable, dropTable, descTable};
