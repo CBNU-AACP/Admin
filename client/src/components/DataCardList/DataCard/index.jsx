@@ -8,8 +8,8 @@ import http from "../../../common/axios";
 import "./style.scss";
 
 export default function DataCard({ isNew, data, id, add, remove }) {
-  const schema = useSelector(state => state.table.currentSchema);
-
+  const currentSchemaData = useSelector(state => state.table.currentSchemaData);
+  const { attributes } = currentSchemaData;
   const [msgState, setMsgState] = useState("");
   const [isAddClick, setIsAddClick] = useState(false);
 
@@ -43,22 +43,24 @@ export default function DataCard({ isNew, data, id, add, remove }) {
       {!isAddClick && isNew ? (
         <>
           <table className="attributeList">
-            {Object.keys(schema).map((attribute, index) => (
-              <tr className="attribute">
-                <td className="attribute column">{attribute}</td>
-                <td className="attribute">
-                  <input
-                    className="input"
-                    type="text"
-                    autoFocus={index === 0}
-                    placeholder={`${attribute}`}
-                    onChange={e => {
-                      data[attribute] = e.target.value;
-                    }}
-                  />
-                </td>
-              </tr>
-            ))}
+            <tbody>
+              {Object.keys(attributes).map((attribute, index) => (
+                <tr key={attribute + attribute.length}>
+                  <td className="attribute column">{attribute}</td>
+                  <td className="attribute">
+                    <input
+                      className="input"
+                      type="text"
+                      autoFocus={index === 0}
+                      placeholder={`${attribute}`}
+                      onChange={e => {
+                        data[attribute] = e.target.value;
+                      }}
+                    />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
           </table>
           <div className="btnBox addBox">
             <div
@@ -74,12 +76,14 @@ export default function DataCard({ isNew, data, id, add, remove }) {
         </>
       ) : (
         <table className="attributeList">
-          {Object.keys(schema).map(attribute => (
-            <tr>
-              <td className="attribute column">{attribute}</td>
-              <td className="attribute">{data[attribute]}</td>
-            </tr>
-          ))}
+          <tbody>
+            {Object.keys(attributes).map(attribute => (
+              <tr key={attribute + attribute.length * 2}>
+                <td className="attribute column">{attribute}</td>
+                <td className="attribute">{data[attribute]}</td>
+              </tr>
+            ))}
+          </tbody>
         </table>
       )}
     </div>

@@ -24,7 +24,7 @@ export default function ColumnElement({ element, remove }) {
     <div className="columnBox">
       <form className="column">
         <div className="element">
-          <span className="label">컬럼명: </span>
+          <span className="label bold">컬럼명: </span>
           <input
             className="input"
             type="text"
@@ -36,7 +36,7 @@ export default function ColumnElement({ element, remove }) {
         </div>
 
         <div className="element">
-          <span className="label">타입: </span>
+          <span className="label bold">타입: </span>
           <select
             className="select"
             id={`dataId${element.id}`}
@@ -84,7 +84,7 @@ export default function ColumnElement({ element, remove }) {
         </div> */}
 
         <div className="element">
-          <span className="label">PK: </span>
+          <span className="label bold">PK: </span>
           <select
             className="select"
             id={`pkId${element.id}`}
@@ -97,7 +97,7 @@ export default function ColumnElement({ element, remove }) {
         </div>
 
         <div className="element">
-          <span className="label">FK: </span>
+          <span className="label bold">FK: </span>
           <select
             className="select"
             id={`fkId${element.id}`}

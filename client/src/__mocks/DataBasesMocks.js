@@ -1,7 +1,7 @@
 const dataBases = [
   {
     id: 1,
-    name: "admin",
+    name: "heroku_4609bfe706a1641",
   },
   {
     id: 2,
@@ -13,23 +13,7 @@ const dataBases = [
   },
   {
     id: 4,
-    name: "bluetooth",
-  },
-  {
-    id: 5,
-    name: "admin",
-  },
-  {
-    id: 6,
-    name: "checkmate",
-  },
-  {
-    id: 7,
-    name: "bluetooth",
-  },
-  {
-    id: 8,
-    name: "bluetooth",
+    name: "aacp",
   },
 ];
 
