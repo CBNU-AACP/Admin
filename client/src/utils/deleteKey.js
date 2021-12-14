@@ -1,8 +1,9 @@
 /* eslint-disable no-param-reassign */
-export default function deleteId(data) {
+export default function deleteKey(data, string) {
   return data.map(element => {
     element = { ...element }; // 깊은 복사
-    delete element.id;
+    string.forEach(key => delete element[key]);
+
     return element;
   });
 }

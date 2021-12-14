@@ -8,7 +8,6 @@ export const getData = createAsyncThunk(
   `${name}/getData`,
   async (tablename, thunkAPI) => {
     try {
-      console.log(tablename);
       const response = await axios.get(`/v1/row/${tablename}`);
       return response.data.data;
     } catch (err) {
@@ -17,7 +16,34 @@ export const getData = createAsyncThunk(
   },
 );
 
+export const addData = createAsyncThunk(
+  `${name}/addData`,
+  async (data, thunkAPI) => {
+    try {
+      console.log(data);
+      const response = await axios.post(`/v1/row`, data);
+      return response.data.data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err);
+    }
+  },
+);
+
+export const removeData = createAsyncThunk(
+  `${name}/removeData`,
+  async (data, thunkAPI) => {
+    try {
+      console.log(data);
+      const response = await axios.post(`/v1/row/delete`, data);
+      return response.data.data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err);
+    }
+  },
+);
+
 const initialState = {
+  isLoading: false,
   currentDataList: [],
 };
 
@@ -26,13 +52,42 @@ export const dataSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
+    [getData.pending.type]: (state, action) => {
+      state.isLoading = true;
+    },
     [getData.fulfilled.type]: (state, action) => {
-      // 성공
+      state.isLoading = false;
       state.currentDataList = action.payload;
     },
     [getData.rejected.type]: (state, action) => {
-      // 실패
+      state.isLoading = false;
       state.currentDataList = [];
+    },
+
+    [addData.pending.type]: (state, action) => {
+      state.isLoading = true;
+    },
+    [addData.fulfilled.type]: (state, action) => {
+      state.isLoading = false;
+      // state.currentDataList = action.payload;
+    },
+    [addData.rejected.type]: (state, action) => {
+      state.isLoading = false;
+      // state.currentDataList = [];
+      console.log(action.payload);
+    },
+
+    [removeData.pending.type]: (state, action) => {
+      state.isLoading = true;
+    },
+    [removeData.fulfilled.type]: (state, action) => {
+      state.isLoading = false;
+      // state.currentDataList = action.payload;
+    },
+    [removeData.rejected.type]: (state, action) => {
+      state.isLoading = false;
+      // state.currentDataList = [];
+      console.log(action.payload);
     },
   },
 });

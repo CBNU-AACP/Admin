@@ -41,6 +41,7 @@ export const removeDataBases = createAsyncThunk(
 );
 
 const initialState = {
+  isLoading: false,
   databases: [],
 };
 
@@ -49,28 +50,38 @@ export const dbSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
+    [getDataBases.pending.type]: (state, action) => {
+      state.isLoading = true;
+      state.databases = action.payload;
+    },
     [getDataBases.fulfilled.type]: (state, action) => {
-      // 성공
+      state.isLoading = false;
       state.databases = action.payload;
     },
     [getDataBases.rejected.type]: (state, action) => {
-      // 실패
+      state.isLoading = false;
+      state.databases = action.payload;
+    },
+
+    [createDataBases.pending.type]: (state, action) => {
+      state.isLoading = true;
       state.databases = action.payload;
     },
     [createDataBases.fulfilled.type]: (state, action) => {
-      // 성공
       state.databases = action.payload;
     },
     [createDataBases.rejected.type]: (state, action) => {
-      // 실패
+      state.databases = action.payload;
+    },
+
+    [removeDataBases.pending.type]: (state, action) => {
+      state.isLoading = true;
       state.databases = action.payload;
     },
     [removeDataBases.fulfilled.type]: (state, action) => {
-      // 성공
       state.databases = action.payload;
     },
     [removeDataBases.rejected.type]: (state, action) => {
-      // 실패
       state.databases = action.payload;
     },
   },
