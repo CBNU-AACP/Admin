@@ -1,13 +1,12 @@
+/* eslint-disable consistent-return */
 /* eslint-disable no-param-reassign */
 /* eslint-disable jsx-a11y/no-autofocus */
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import cx from "classnames";
-import http from "../../../common/axios";
+import { searchKeyPK } from "../../../utils";
 import "./style.scss";
 
-export default function DataCard({ isNew, data, id, add, remove }) {
+export default function DataCard({ isNew, data, clientId, add, remove }) {
   const currentSchemaData = useSelector(state => state.table.currentSchemaData);
   const { attributes, schemaKey } = currentSchemaData;
   const [msgState, setMsgState] = useState("");
@@ -32,7 +31,7 @@ export default function DataCard({ isNew, data, id, add, remove }) {
           <>
             <div
               className="circle drop"
-              onClick={() => remove(id)}
+              onClick={() => remove(clientId, data[searchKeyPK(schemaKey)])}
               aria-hidden="true"
             />
             <p className="text">삭제</p>
@@ -45,29 +44,22 @@ export default function DataCard({ isNew, data, id, add, remove }) {
           <table className="attributeList">
             <tbody>
               {Object.keys(attributes).map((attribute, index) => {
-                if (schemaKey[attribute] !== "PK")
-                  return (
-                    <tr key={attribute + attribute.length}>
-                      <td className="attribute column">{attribute}</td>
-                      <td className="attribute">
-                        <input
-                          className="input"
-                          type="text"
-                          autoFocus={index === 1}
-                          placeholder={`${attribute}`}
-                          onChange={e => {
-                            data[attribute] = e.target.value;
-                          }}
-                        />
-                      </td>
-                    </tr>
-                  );
+                if (attribute === "createdAt" || attribute === "updatedAt")
+                  return;
 
                 return (
                   <tr key={attribute + attribute.length}>
                     <td className="attribute column">{attribute}</td>
-                    <td className="attribute column">
-                      PK 값은 입력할 수 없습니다.
+                    <td className="attribute">
+                      <input
+                        className="input"
+                        type="text"
+                        autoFocus={index === 0}
+                        placeholder={`${attribute}`}
+                        onChange={e => {
+                          data[attribute] = e.target.value;
+                        }}
+                      />
                     </td>
                   </tr>
                 );

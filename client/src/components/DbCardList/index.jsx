@@ -11,7 +11,7 @@ export default function DataBases() {
   const dispatch = useDispatch();
   const [dbData, setDBData] = useState([]);
   const nextId = useRef(0);
-  const databases = useSelector(state => state.database.databases);
+  const { isLoading, databases } = useSelector(state => state.database);
 
   useEffect(() => {
     dispatch(getDataBases()).then(res => {
@@ -20,7 +20,7 @@ export default function DataBases() {
         res.payload.map(db => {
           nextId.current += 1;
           console.log(nextId.current);
-          return { id: nextId.current, name: db };
+          return { clientId: nextId.current, name: db };
         }),
       );
     });
@@ -30,29 +30,29 @@ export default function DataBases() {
     console.log(dbData);
   }, [dbData]);
 
-  const addDb = (id, name) => {
+  const addDb = (clientId, name) => {
     // api 연결
-    console.log(id, name);
+    console.log(clientId, name);
   };
 
   const removeDb = remove => {
-    setDBData(dbData.filter(db => db.id !== remove));
+    setDBData(dbData.filter(db => db.clientId !== remove));
   };
 
   const newDb = () => {
     nextId.current += 1;
-    setDBData([...dbData, { id: nextId.current, name: "" }]);
+    setDBData([...dbData, { clientId: nextId.current, name: "" }]);
   };
 
-  return dbData.length != 0 ? (
+  return !isLoading ? (
     <>
       <div className="dbList">
         {dbData.map(database => (
           <DataBase
             isNew={database.name === ""}
             database={database.name}
-            key={database.id + database.name}
-            id={database.id}
+            key={database.clientId + database.name}
+            clientId={database.clientId}
             add={addDb}
             remove={removeDb}
           />

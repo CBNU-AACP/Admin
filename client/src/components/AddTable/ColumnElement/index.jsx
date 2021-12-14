@@ -13,10 +13,10 @@ export default function ColumnElement({ element, remove }) {
     element.PK = isPK.target.value;
     setDisabled(!isDisabled);
     if (isPK.target.value) {
-      element.FK = false;
-      element.constraint = false;
-      document.getElementById(`fkId${element.id}`).value = false;
-      document.getElementById(`conId${element.id}`).value = false;
+      element.FK = "false";
+      element.constraint = "false";
+      document.getElementById(`fkId${element.clientId}`).value = "false";
+      document.getElementById(`conId${element.clientId}`).value = "false";
     }
   }
 
@@ -39,7 +39,7 @@ export default function ColumnElement({ element, remove }) {
           <span className="label bold">타입: </span>
           <select
             className="select"
-            id={`dataId${element.id}`}
+            id={`dataId${element.clientId}`}
             name="data"
             defaultValue="int"
             onChange={e => {
@@ -60,7 +60,7 @@ export default function ColumnElement({ element, remove }) {
           <span className="label">제약조건: </span>
           <select
             className="select"
-            id={`conId${element.id}`}
+            id={`conId${element.clientId}`}
             name="constraint"
             defaultValue="false"
             onChange={e => {
@@ -92,7 +92,7 @@ export default function ColumnElement({ element, remove }) {
           <span className="label bold">PK: </span>
           <select
             className="select"
-            id={`pkId${element.id}`}
+            id={`pkId${element.clientId}`}
             name="PK"
             onChange={pkSelect}
             defaultValue="false">
@@ -105,7 +105,7 @@ export default function ColumnElement({ element, remove }) {
           <span className="label bold">FK: </span>
           <select
             className="select"
-            id={`fkId${element.id}`}
+            id={`fkId${element.clientId}`}
             name="FK"
             defaultValue="false"
             onChange={e => {
@@ -123,7 +123,10 @@ export default function ColumnElement({ element, remove }) {
           </select>
         </div>
       </form>
-      <MdOutlineCancel className="cancel" onClick={() => remove(element.id)} />
+      <MdOutlineCancel
+        className="cancel"
+        onClick={() => remove(element.clientId)}
+      />
     </div>
   );
 }

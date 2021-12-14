@@ -1,9 +1,11 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
 import cx from "classnames";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { removeTable } from "../../store/tableSlice";
 import "./style.scss";
 
 export default function Schema() {
+  const dispatch = useDispatch();
   const [isLoading, setLoading] = useState(true);
   const currentTable = useSelector(state => state.table.currentTable);
   const currentSchemaData = useSelector(state => state.table.currentSchemaData);
@@ -11,7 +13,8 @@ export default function Schema() {
 
   const remove = () => {
     // currentTable을 파라미터로 보낸다.
-    console.log(currentTable);
+    setLoading(true);
+    dispatch(removeTable(currentTable));
   };
 
   useEffect(() => {

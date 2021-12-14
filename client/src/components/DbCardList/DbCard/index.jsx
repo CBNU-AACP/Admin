@@ -5,7 +5,7 @@ import cx from "classnames";
 import http from "../../../common/axios";
 import "./style.scss";
 
-export default function DataBase({ isNew, database, id, remove, add }) {
+export default function DataBase({ isNew, database, clientId, remove, add }) {
   const [dbName, setDbName] = useState("");
   const [msgState, setMsgState] = useState("");
   const [isAddClick, setIsAddClick] = useState(false);
@@ -41,7 +41,7 @@ export default function DataBase({ isNew, database, id, remove, add }) {
           <>
             <div
               className="circle drop"
-              onClick={() => remove(id)}
+              onClick={() => remove(clientId)}
               aria-hidden="true"
             />
             <p className="text">삭제</p>
@@ -63,7 +63,7 @@ export default function DataBase({ isNew, database, id, remove, add }) {
               className="circle add"
               onClick={() => {
                 if (dbName !== "") {
-                  add(id, dbName);
+                  add(clientId, dbName);
                   setIsAddClick(true);
                 }
               }}
