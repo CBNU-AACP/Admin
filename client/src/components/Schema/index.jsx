@@ -26,36 +26,35 @@ export default function Schema() {
       </div>
       <p className="tableName bold">{currentTable} 테이블</p>
       <p className="schemaLabel">스키마 조회</p>
-      <ul>
-        {original.map(attribute => (
-          <li key={attribute.Field + attribute.Null}>
-            <form className="attribute">
-              <span className="attributeLabel bold">{attribute.Field}</span>
-              <span className="attributeLabel">
-                {attribute.Type.toUpperCase()}
-              </span>
-              <span className="attributeLabel">
+      <table className="attributeList">
+        <tbody>
+          <tr>
+            <td className="attribute head">컬럼명</td>
+            <td className="attribute head">타입</td>
+            <td className="attribute head">NULL 여부</td>
+            <td className="attribute head">DEFAULT 값</td>
+            <td className="attribute head">KEY 값</td>
+          </tr>
+          {original.map(attribute => (
+            <tr key={attribute.Field + attribute.Null}>
+              <td className="attribute bold">{attribute.Field}</td>
+              <td className="attribute">{attribute.Type.toUpperCase()}</td>
+              <td className="attribute">
                 {attribute.Null === "NO" ? "NOT NULL" : "NULL 허용 "}
-              </span>
-              {attribute.Default && (
-                <span className="attributeLabel">
-                  DEFAULT {attribute.Default}
-                </span>
-              )}
-              {attribute.Key && (
-                <span className="attributeLabel bold">
-                  {attribute.Key === "PRI" && "PRIMARY KEY"}
-                  {attribute.Key === "MUL" && "FOREIGN KEY"}
-                  {attribute.Key === "UNI" && "UNIQUE"}
-                </span>
-              )}
-              {attribute.Extra && (
-                <span className="attributeLabel">{attribute.Extra}</span>
-              )}
-            </form>
-          </li>
-        ))}
-      </ul>
+              </td>
+              <td className="attribute">
+                {attribute.Default ? attribute.Default : "X"}
+              </td>
+              <td className="attribute bold">
+                {attribute.Key === "PRI" && "PRIMARY KEY"}
+                {attribute.Key === "MUL" && "FOREIGN KEY"}
+                {attribute.Key === "UNI" && "UNIQUE"}
+                {!attribute.Key && "X"}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   ) : (
     <div>Loading..</div>
