@@ -66,7 +66,7 @@ const createRows = async(req,res,next)=>{
       await poolQuery(query);
     }
 
-    return res.json(createResponse(res));
+    return res.json(createResponse(res, req.body));
   } catch (error) {
       console.error(error);
       next(error);
@@ -129,7 +129,7 @@ const deleteRow = async(req,res,next) => {
     `);
     let q = `DELETE FROM ${body.tableName} WHERE ${Object.values(columnsPK[0][0])} = ${body[`${Object.values(columnsPK[0][0])}`]}`;
     await poolQuery(q);
-    return res.json(createResponse(res));
+    return res.json(createResponse(res, req.body));
   } catch (error) {
     console.error(error);
     next(error);
