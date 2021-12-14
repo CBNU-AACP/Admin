@@ -1,20 +1,25 @@
+/* eslint-disable no-param-reassign */
 import React, { useContext, useState, useEffect, useRef } from "react";
+import { useDispatch } from "react-redux";
 import cx from "classnames";
+import { addTable } from "../../store/tableSlice";
+import { deleteId } from "../../utils";
 import "./style.scss";
 import ColumnElement from "./ColumnElement";
 
 export default function AddTable() {
+  const dispatch = useDispatch();
   const [tableName, setTableName] = useState("");
   const [columns, setColumns] = useState([]);
   const nextId = useRef(1);
 
   const initialState = {
     columnName: "",
-    dataType: "CHAR",
-    constraint: false,
-    default: "",
-    PK: false,
-    FK: false,
+    dataType: "INT(20)",
+    constraint: "false",
+    // default: "",
+    PK: "false",
+    FK: "false",
   };
 
   let isNullColumnName = true;
@@ -40,7 +45,8 @@ export default function AddTable() {
       if (column.columnName.length !== 0) isNullColumnName = false;
     });
     if (tableName.length >= 1 && !isNullColumnName)
-      console.log({ tableName, column: [...columns] }); // 데이터 전송 api 연결
+      dispatch(addTable({ tableName, column: [...deleteId(columns)] }));
+    console.log({ tableName, column: [...deleteId([...columns])] });
   };
 
   return (
