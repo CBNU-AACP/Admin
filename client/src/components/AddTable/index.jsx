@@ -3,7 +3,7 @@ import React, { useContext, useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
 import cx from "classnames";
 import { addTable } from "../../store/tableSlice";
-import { deleteId } from "../../utils";
+import { deleteKey } from "../../utils";
 import "./style.scss";
 import ColumnElement from "./ColumnElement";
 
@@ -26,14 +26,14 @@ export default function AddTable() {
 
   useEffect(() => {
     for (let i = 0; i < 3; i += 1) {
-      columns.push({ id: nextId.current, ...initialState });
+      columns.push({ clientId: nextId.current, ...initialState });
       nextId.current += 1;
     }
     setColumns([...columns]);
   }, []);
 
   const removeColumn = remove => {
-    setColumns(columns.filter(column => column.id !== remove));
+    setColumns(columns.filter(column => column.clientId !== remove));
   };
 
   const handleSubmitColumn = () => {
@@ -45,8 +45,9 @@ export default function AddTable() {
       if (column.columnName.length !== 0) isNullColumnName = false;
     });
     if (tableName.length >= 1 && !isNullColumnName)
-      dispatch(addTable({ tableName, column: [...deleteId(columns)] }));
-    console.log({ tableName, column: [...deleteId([...columns])] });
+      dispatch(
+        addTable({ tableName, column: [...deleteKey(columns, ["clientId"])] }),
+      );
   };
 
   return (
@@ -66,7 +67,10 @@ export default function AddTable() {
           className="addBox"
           type="button"
           onClick={() => {
-            setColumns([...columns, { id: nextId.current, ...initialState }]);
+            setColumns([
+              ...columns,
+              { clientId: nextId.current, ...initialState },
+            ]);
             nextId.current += 1;
           }}>
           <div className="addCircle" />
@@ -77,7 +81,7 @@ export default function AddTable() {
       <ul>
         {columns.map(column => (
           <ColumnElement
-            key={column.id + column}
+            key={column.clientId + column}
             element={column}
             remove={removeColumn}
           />

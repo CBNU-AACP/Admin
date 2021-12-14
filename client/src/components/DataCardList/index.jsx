@@ -1,60 +1,91 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import cx from "classnames";
 import { IoAddOutline } from "react-icons/io5";
-import { getData } from "../../store/dataSlice";
-import DataMocks from "../../__mocks/DataMocks";
+import { getData, addData, removeData } from "../../store/dataSlice";
+import { deleteKey, searchKeyPK } from "../../utils";
 import DataCard from "./DataCard";
-import axios from "../../common/axios";
 import "./style.scss";
 
 export default function DataCardList() {
+  const [reload, setReload] = useState(false);
   const dispatch = useDispatch();
-  const [isLoading, setLoading] = useState(true);
-  const [dataList, setDataList] = useState(
-    DataMocks.map((data, idx) => ({ id: idx + 1, ...data })),
-  ); // thunk api로 대체
-  const nextId = useRef(dataList.length + 1);
-  const currentTable = useSelector(state => state.table.currentTable);
-  const currentSchemaData = useSelector(state => state.table.currentSchemaData);
-  const { attributes } = currentSchemaData;
+  const nextId = useRef(0);
+  const { currentTable, currentSchemaData } = useSelector(state => state.table);
+  const { isLoading, currentDataList } = useSelector(state => state.data);
+  const [dataList, setDataList] = useState([]);
+  const { attributes, schemaKey } = currentSchemaData;
 
   useEffect(() => {
-    dispatch(getData(currentTable));
+    nextId.current = 0;
+    dispatch(getData(currentTable)).then(res => {
+      setDataList(
+        res.payload.map(data => {
+          nextId.current += 1;
+          return { clientId: nextId.current, ...data };
+        }),
+      );
+    });
   }, []);
 
   useEffect(() => {
-    if (attributes) setLoading(false);
-  }, [attributes]);
+    console.log(dataList);
+  }, [dataList]);
 
-  const addData = data => {
-    // thunk api 연결
-    console.log(data);
+  const addNewData = data => {
+    dispatch(
+      addData({
+        tableName: currentTable,
+        rows: deleteKey([data], ["clientId", "createdAt", "updatedAt"]),
+      }),
+    ).then(() => {
+      nextId.current = 0;
+      dispatch(getData(currentTable)).then(res => {
+        setDataList(
+          res.payload.map(data => {
+            nextId.current += 1;
+            return { clientId: nextId.current, ...data };
+          }),
+        );
+      });
+    });
   };
 
-  const removeData = remove => {
-    // api 연동
-    setDataList(dataList.filter(db => db.id !== remove));
+  const remove = (remove, pk) => {
+    dispatch(
+      removeData({
+        tableName: currentTable,
+        [searchKeyPK(schemaKey)]: pk,
+      }),
+    ).then(() => {
+      nextId.current = 0;
+      dispatch(getData(currentTable)).then(res => {
+        setDataList(
+          res.payload.map(data => {
+            nextId.current += 1;
+            return { clientId: nextId.current, ...data };
+          }),
+        );
+      });
+    });
   };
 
   const newData = () => {
-    // api 연동
-    setDataList([...dataList, { id: nextId.current, ...attributes }]);
     nextId.current += 1;
+    setDataList([...dataList, { clientId: nextId.current, ...attributes }]);
   };
 
-  return !isLoading ? (
+  return !isLoading && attributes ? (
     <>
       <h2 className="dataListTitle">{currentTable} 테이블의 데이터 목록</h2>
       <div className="dataList">
         {dataList.map(data => (
           <DataCard
-            isNew={DataMocks.length < data.id}
+            isNew={currentDataList.length < data.clientId}
             data={data}
-            key={data + data.id}
-            id={data.id}
-            add={addData}
-            remove={removeData}
+            key={data + data.clientId}
+            clientId={data.clientId}
+            add={addNewData}
+            remove={remove}
           />
         ))}
       </div>

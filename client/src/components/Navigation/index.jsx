@@ -7,8 +7,7 @@ import { setTable } from "../../store/tableSlice";
 
 export default function Natigation() {
   const dispatch = useDispatch();
-  const tables = useSelector(state => state.table.tables);
-  const currentTable = useSelector(state => state.table.currentTable);
+  const { tables, currentTable, isLoading } = useSelector(state => state.table);
 
   return (
     <nav className="navigation">
@@ -24,21 +23,25 @@ export default function Natigation() {
         <p className="addText">테이블 추가</p>
       </button>
       <p className="naviTitle">테이블 목록</p>
-      <ul className="sideMenu">
-        {tables.map(table => (
-          <li
-            key={table}
-            className={cx("tableTitle", {
-              isFocus: table === currentTable,
-            })}
-            onClick={() => {
-              dispatch(setTable(table));
-            }}
-            aria-hidden="true">
-            {table}
-          </li>
-        ))}
-      </ul>
+      {isLoading ? (
+        <div>Loading..</div>
+      ) : (
+        <ul className="sideMenu">
+          {tables.map(table => (
+            <li
+              key={table}
+              className={cx("tableTitle", {
+                isFocus: table === currentTable,
+              })}
+              onClick={() => {
+                dispatch(setTable(table));
+              }}
+              aria-hidden="true">
+              {table}
+            </li>
+          ))}
+        </ul>
+      )}
     </nav>
   );
 }
