@@ -53,12 +53,25 @@ export const getSchema = createAsyncThunk(
   },
 );
 
+export const getPKs = createAsyncThunk(
+  `${name}/getPKs`,
+  async (data, thunkAPI) => {
+    try {
+      console.log(data);
+      const response = await axios.post("/v1/row/getPKs", data);
+      return response.data.data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err);
+    }
+  },
+);
+
 const initialState = {
   isLoading: false,
   tables: [],
   currentTable: "createTable",
   currentSchemaData: {},
-  currentDataList: [],
+  currentSchemaPKs: [],
 };
 
 export const tableSlice = createSlice({
@@ -124,6 +137,17 @@ export const tableSlice = createSlice({
     [getSchema.rejected.type]: (state, action) => {
       state.isLoading = false;
       state.currentSchemaData = {};
+    },
+
+    [getPKs.pending.type]: (state, action) => {
+      state.isLoading = true;
+    },
+    [getPKs.fulfilled.type]: (state, action) => {
+      state.isLoading = false;
+      state.currentSchemaPKs = action.payload;
+    },
+    [getPKs.rejected.type]: (state, action) => {
+      state.currentSchemaPKs = [];
     },
   },
 });
