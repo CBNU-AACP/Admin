@@ -1,5 +1,6 @@
 import dataToKey from "./dataToKey";
 import dataToSchema from "./dataToSchema";
-import deleteId from "./deleteId";
+import deleteKey from "./deleteKey";
+import searchKeyPK from "./searchKeyPK";
 
-export { dataToKey, dataToSchema, deleteId };
+export { dataToKey, dataToSchema, deleteKey, searchKeyPK };
