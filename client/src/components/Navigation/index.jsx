@@ -29,7 +29,7 @@ export default function Natigation() {
           <li
             key={table}
             className={cx("tableTitle", {
-              isFocus: table.title === currentTable,
+              isFocus: table === currentTable,
             })}
             onClick={() => {
               dispatch(setTable(table));

@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import cx from "classnames";
 import { IoAddOutline } from "react-icons/io5";
+import { getData } from "../../store/dataSlice";
 import DataMocks from "../../__mocks/DataMocks";
 import DataCard from "./DataCard";
 import axios from "../../common/axios";
 import "./style.scss";
 
 export default function DataCardList() {
+  const dispatch = useDispatch();
   const [isLoading, setLoading] = useState(true);
   const [dataList, setDataList] = useState(
     DataMocks.map((data, idx) => ({ id: idx + 1, ...data })),
@@ -16,6 +18,10 @@ export default function DataCardList() {
   const currentTable = useSelector(state => state.table.currentTable);
   const currentSchemaData = useSelector(state => state.table.currentSchemaData);
   const { attributes } = currentSchemaData;
+
+  useEffect(() => {
+    dispatch(getData(currentTable));
+  }, []);
 
   useEffect(() => {
     if (attributes) setLoading(false);
