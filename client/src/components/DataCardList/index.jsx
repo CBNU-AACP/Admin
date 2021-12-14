@@ -7,7 +7,7 @@ import DataCard from "./DataCard";
 import "./style.scss";
 
 export default function DataCardList() {
-  const [reload, setReload] = useState(false);
+  const [reload, setReload] = useState(true);
   const dispatch = useDispatch();
   const nextId = useRef(0);
   const { currentTable, currentSchemaData } = useSelector(state => state.table);
@@ -16,28 +16,7 @@ export default function DataCardList() {
   const { attributes, schemaKey } = currentSchemaData;
 
   useEffect(() => {
-    nextId.current = 0;
-    dispatch(getData(currentTable)).then(res => {
-      setDataList(
-        res.payload.map(data => {
-          nextId.current += 1;
-          return { clientId: nextId.current, ...data };
-        }),
-      );
-    });
-  }, []);
-
-  useEffect(() => {
-    console.log(dataList);
-  }, [dataList]);
-
-  const addNewData = data => {
-    dispatch(
-      addData({
-        tableName: currentTable,
-        rows: deleteKey([data], ["clientId", "createdAt", "updatedAt"]),
-      }),
-    ).then(() => {
+    if (reload) {
       nextId.current = 0;
       dispatch(getData(currentTable)).then(res => {
         setDataList(
@@ -47,6 +26,18 @@ export default function DataCardList() {
           }),
         );
       });
+      setReload(false);
+    }
+  }, [reload]);
+
+  const addNewData = data => {
+    dispatch(
+      addData({
+        tableName: currentTable,
+        rows: deleteKey([data], ["clientId", "createdAt", "updatedAt"]),
+      }),
+    ).then(() => {
+      setReload(true);
     });
   };
 
@@ -57,15 +48,7 @@ export default function DataCardList() {
         [searchKeyPK(schemaKey)]: pk,
       }),
     ).then(() => {
-      nextId.current = 0;
-      dispatch(getData(currentTable)).then(res => {
-        setDataList(
-          res.payload.map(data => {
-            nextId.current += 1;
-            return { clientId: nextId.current, ...data };
-          }),
-        );
-      });
+      setReload(true);
     });
   };
 
@@ -74,7 +57,7 @@ export default function DataCardList() {
     setDataList([...dataList, { clientId: nextId.current, ...attributes }]);
   };
 
-  return !isLoading && attributes ? (
+  return !isLoading && attributes && !reload ? (
     <>
       <h2 className="dataListTitle">{currentTable} 테이블의 데이터 목록</h2>
       <div className="dataList">
