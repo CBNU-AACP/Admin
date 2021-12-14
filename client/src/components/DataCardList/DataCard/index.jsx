@@ -9,7 +9,7 @@ import "./style.scss";
 
 export default function DataCard({ isNew, data, id, add, remove }) {
   const currentSchemaData = useSelector(state => state.table.currentSchemaData);
-  const { attributes } = currentSchemaData;
+  const { attributes, schemaKey } = currentSchemaData;
   const [msgState, setMsgState] = useState("");
   const [isAddClick, setIsAddClick] = useState(false);
 
@@ -44,22 +44,34 @@ export default function DataCard({ isNew, data, id, add, remove }) {
         <>
           <table className="attributeList">
             <tbody>
-              {Object.keys(attributes).map((attribute, index) => (
-                <tr key={attribute + attribute.length}>
-                  <td className="attribute column">{attribute}</td>
-                  <td className="attribute">
-                    <input
-                      className="input"
-                      type="text"
-                      autoFocus={index === 0}
-                      placeholder={`${attribute}`}
-                      onChange={e => {
-                        data[attribute] = e.target.value;
-                      }}
-                    />
-                  </td>
-                </tr>
-              ))}
+              {Object.keys(attributes).map((attribute, index) => {
+                if (schemaKey[attribute] !== "PK")
+                  return (
+                    <tr key={attribute + attribute.length}>
+                      <td className="attribute column">{attribute}</td>
+                      <td className="attribute">
+                        <input
+                          className="input"
+                          type="text"
+                          autoFocus={index === 1}
+                          placeholder={`${attribute}`}
+                          onChange={e => {
+                            data[attribute] = e.target.value;
+                          }}
+                        />
+                      </td>
+                    </tr>
+                  );
+
+                return (
+                  <tr key={attribute + attribute.length}>
+                    <td className="attribute column">{attribute}</td>
+                    <td className="attribute column">
+                      PK 값은 입력할 수 없습니다.
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
           <div className="btnBox addBox">

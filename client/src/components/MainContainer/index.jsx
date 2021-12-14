@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect, useRef } from "react";
 import cx from "classnames";
 import { useDispatch, useSelector } from "react-redux";
 import SchemaMocks from "../../__mocks/SchemaMocks";
-import { setCurrentSchemaData } from "../../store/tableSlice";
+import { setCurrentSchemaData, getSchema } from "../../store/tableSlice";
 import { dataToKey, dataToSchema } from "../../utils";
 import Schema from "../Schema";
 import "./style.scss";
@@ -15,13 +15,7 @@ export default function mainContainer() {
 
   useEffect(() => {
     setMenuSelect("schema");
-    dispatch(
-      setCurrentSchemaData({
-        original: SchemaMocks,
-        attributes: dataToSchema(SchemaMocks),
-        schemaKey: dataToKey(SchemaMocks),
-      }),
-    );
+    dispatch(getSchema(currentTable));
   }, [currentTable]); // schema thunk api 요청
 
   return (
