@@ -4,6 +4,7 @@ import "./style.scss";
 import { AiOutlineDatabase } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { setTable } from "../../store/tableSlice";
+import Loading from "../Loading";
 
 export default function Natigation() {
   const dispatch = useDispatch();
@@ -24,7 +25,7 @@ export default function Natigation() {
       </button>
       <p className="naviTitle">테이블 목록</p>
       {isLoading ? (
-        <div>Loading..</div>
+        <Loading />
       ) : (
         <ul className="sideMenu">
           {tables.map(table => (

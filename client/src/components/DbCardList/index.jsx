@@ -6,6 +6,7 @@ import DataBasesMocks from "../../__mocks/DataBasesMocks";
 import DataBase from "./DbCard";
 import { getDataBases } from "../../store/dbSlice";
 import "./style.scss";
+import Loading from "../Loading";
 
 export default function DataBases() {
   const dispatch = useDispatch();
@@ -68,6 +69,6 @@ export default function DataBases() {
       </button>
     </>
   ) : (
-    <div>Loading..</div>
+    <Loading />
   );
 }

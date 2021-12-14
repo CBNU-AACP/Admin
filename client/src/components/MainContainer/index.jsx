@@ -3,6 +3,7 @@ import cx from "classnames";
 import { useDispatch, useSelector } from "react-redux";
 import SchemaMocks from "../../__mocks/SchemaMocks";
 import { getPKs, getSchema } from "../../store/tableSlice";
+import Loading from "../Loading";
 import Schema from "../Schema";
 import "./style.scss";
 import DataCardList from "../DataCardList";
@@ -55,7 +56,7 @@ export default function mainContainer() {
           </span>
         </div>
       ) : (
-        <div>Loading..</div>
+        <Loading />
       )}
       {!isLoading && menuSelect === "schema" && <Schema />}
       {!isLoading && menuSelect === "data" && <DataCardList />}

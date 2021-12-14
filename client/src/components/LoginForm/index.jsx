@@ -37,14 +37,15 @@ export default function LoginForm() {
   }, [errors.userId, errors.password]);
 
   const onSubmit = async data => {
-    console.log(data);
-    try {
-      const response = await http.post(`login`, data);
-      localStorage.setItem("isAuthorized", response.success);
-      if (response.success) navigate("/");
-    } catch (e) {
-      console.log(e);
-    }
+    // console.log(data);
+    // try {
+    //   const response = await http.post(`login`, data);
+    //   localStorage.setItem("isAuthorized", response.success);
+    //   if (response.success) navigate("/");
+    // } catch (e) {
+    //   console.log(e);
+    // }
+    navigate("/");
   };
 
   return (

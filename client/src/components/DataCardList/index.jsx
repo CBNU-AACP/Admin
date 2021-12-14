@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { IoAddOutline } from "react-icons/io5";
 import { getData, addData, removeData } from "../../store/dataSlice";
+import Loading from "../Loading";
 import { deleteKey, searchKeyPK } from "../../utils";
 import DataCard from "./DataCard";
 import "./style.scss";
@@ -81,6 +82,6 @@ export default function DataCardList() {
       </button>
     </>
   ) : (
-    <div>Loading..</div>
+    <Loading />
   );
 }

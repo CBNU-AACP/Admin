@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect, useRef } from "react";
 import cx from "classnames";
 import { useSelector, useDispatch } from "react-redux";
 import { removeTable } from "../../store/tableSlice";
+import Loading from "../Loading";
 import "./style.scss";
 
 export default function Schema() {
@@ -60,6 +61,6 @@ export default function Schema() {
       </table>
     </div>
   ) : (
-    <div>Loading..</div>
+    <Loading />
   );
 }
