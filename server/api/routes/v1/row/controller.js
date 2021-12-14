@@ -124,10 +124,16 @@ const updateRows = async(req,res,next) => {
 const deleteRow = async(req,res,next) => {
   const body = req.body;
   try {
+    let q;
     const columnsPK = await poolQuery(`SELECT column_name FROM Information_schema.columns
     WHERE table_schema = '${MYSQL_DATABASE}' AND table_name = '${body.tableName}' AND column_key = 'PRI';
     `);
-    let q = `DELETE FROM ${body.tableName} WHERE ${Object.values(columnsPK[0][0])} = ${body[`${Object.values(columnsPK[0][0])}`]}`;
+    
+    if(typeof(body[`${Object.values(columnsPK[0][0])}`]) == "string")
+      q = `DELETE FROM ${body.tableName} WHERE ${Object.values(columnsPK[0][0])} = "${body[`${Object.values(columnsPK[0][0])}`]}"`;
+    else
+      q = `DELETE FROM ${body.tableName} WHERE ${Object.values(columnsPK[0][0])} = ${body[`${Object.values(columnsPK[0][0])}`]}`;
+    
     await poolQuery(q);
     return res.json(createResponse(res, req.body));
   } catch (error) {
