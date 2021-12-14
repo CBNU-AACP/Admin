@@ -14,12 +14,12 @@ const development = {
 };
 
 const production = {
-  username: env.REMOTE_MYSQL_USERNAME,
-  password: env.REMOTE_MYSQL_ROOT_PASSWORD,
-  database: env.REMOTE_MYSQL_DATABASE,
-  host: env.REMOTE_MYSQL_HOST,
-  dialect: env.REMOTE_MYSQL_DIALECT,
-  port: env.REMOTE_MYSQL_PORT
+  username: env.MYSQL_USERNAME,
+  password: env.MYSQL_ROOT_PASSWORD,
+  database: env.MYSQL_DATABASE,
+  host: env.MYSQL_HOST,
+  dialect: env.MYSQL_DIALECT,
+  port: env.MYSQL_PORT
 };
 
 const test = {
