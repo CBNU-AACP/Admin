@@ -44,7 +44,7 @@ const createTable = async(req,res,next)=>{
         q = q.slice(0,-1);
         q += ');';
         const doc = await poolQuery(q);
-        return res.json(createResponse(res, doc))
+        return res.json(createResponse(res, {doc, name:body.tableName}))
     } catch (error) {
         console.error(error);
         next(error);
@@ -60,7 +60,7 @@ const dropTable = async(req,res,next)=>{
         if(table[0][0].COUNT == 0) return next(TABLE_NOT_EXISTED);
         let q = `DROP TABLE ${name}`;        
         const doc = await poolQuery(q);
-        return res.json(createResponse(res,doc));
+        return res.json(createResponse(res,{doc, name}));
     } catch (error) {
         console.error(error);
         next(error);
