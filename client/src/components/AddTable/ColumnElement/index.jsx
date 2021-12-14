@@ -10,7 +10,7 @@ export default function ColumnElement({ element, remove }) {
   const [isDisabled, setDisabled] = useState(false);
 
   function pkSelect(isPK) {
-    element.PK = Boolean(isPK.target.value);
+    element.PK = isPK.target.value;
     setDisabled(!isDisabled);
     if (isPK.target.value) {
       element.FK = false;
@@ -45,8 +45,13 @@ export default function ColumnElement({ element, remove }) {
             onChange={e => {
               element.dataType = e.target.value;
             }}>
-            <option value="int">INT</option>
-            <option value="char">CHAR</option>
+            <option value="int(20)">INT(20)</option>
+            <option value="double">DOUBLE</option>
+            <option value="decimal">DECIMAL</option>
+            <option value="text">TEXT</option>
+            <option value="char(30)">CHAR(30)</option>
+            <option value="varchar(30)">VARCHAR(30)</option>
+            <option value="datetime">DATETIME</option>
             <option value="date">DATE</option>
           </select>
         </div>
@@ -109,10 +114,10 @@ export default function ColumnElement({ element, remove }) {
             <option value="false">X</option>
             {tables.map(table => (
               <option
-                key={`${table.title}option`}
+                key={`${table}option`}
                 disabled={isDisabled}
-                value={table.title}>
-                {table.title}
+                value={table}>
+                {table}
               </option>
             ))}
           </select>
