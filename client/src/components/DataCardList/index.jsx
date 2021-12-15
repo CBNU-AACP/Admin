@@ -19,14 +19,16 @@ export default function DataCardList() {
   useEffect(() => {
     if (reload) {
       nextId.current = 0;
-      dispatch(getData(currentTable)).then(res => {
-        setDataList(
-          res.payload.map(data => {
-            nextId.current += 1;
-            return { clientId: nextId.current, ...data };
-          }),
-        );
-      });
+      dispatch(getData(currentTable))
+        .then(res => {
+          setDataList(
+            res.payload.map(data => {
+              nextId.current += 1;
+              return { clientId: nextId.current, ...data };
+            }),
+          );
+        })
+        .catch(e => console.log(e));
       setReload(false);
     }
   }, [reload]);

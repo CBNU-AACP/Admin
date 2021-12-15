@@ -15,16 +15,20 @@ export default function DataBases() {
   const { isLoading, databases } = useSelector(state => state.database);
 
   useEffect(() => {
-    dispatch(getDataBases()).then(res => {
-      console.log(res);
-      setDBData(
-        res.payload.map(db => {
-          nextId.current += 1;
-          console.log(nextId.current);
-          return { clientId: nextId.current, name: db };
-        }),
-      );
-    });
+    dispatch(getDataBases())
+      .then(res => {
+        console.log(res);
+        setDBData(
+          res.payload.map(db => {
+            nextId.current += 1;
+            console.log(nextId.current);
+            return { clientId: nextId.current, name: db };
+          }),
+        );
+      })
+      .catch(e => {
+        console.log(e);
+      });
   }, []);
 
   useEffect(() => {

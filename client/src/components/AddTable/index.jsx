@@ -1,17 +1,19 @@
 /* eslint-disable no-param-reassign */
 import React, { useContext, useState, useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import cx from "classnames";
 import { addTable } from "../../store/tableSlice";
 import { deleteKey } from "../../utils";
 import "./style.scss";
 import ColumnElement from "./ColumnElement";
+import Loading from "../Loading";
 
 export default function AddTable() {
   const dispatch = useDispatch();
   const [tableName, setTableName] = useState("");
   const [columns, setColumns] = useState([]);
   const nextId = useRef(1);
+  const { isLoading } = useSelector(state => state.table);
 
   const initialState = {
     columnName: "",
@@ -48,9 +50,10 @@ export default function AddTable() {
       dispatch(
         addTable({ tableName, column: [...deleteKey(columns, ["clientId"])] }),
       );
+    console.log({ tableName, column: [...deleteKey(columns, ["clientId"])] });
   };
 
-  return (
+  return !isLoading ? (
     <div className="addContainer">
       <div className="tableInputBox">
         <span className="tableLabel">테이블 이름: </span>
@@ -96,5 +99,7 @@ export default function AddTable() {
         <span className="addText">테이블 추가</span>
       </button>
     </div>
+  ) : (
+    <Loading />
   );
 }
