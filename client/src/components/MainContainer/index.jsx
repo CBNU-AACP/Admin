@@ -8,16 +8,24 @@ import Schema from "../Schema";
 import "./style.scss";
 import DataCardList from "../DataCardList";
 
-export default function mainContainer() {
+export default function MainContainer() {
   const dispatch = useDispatch();
   const [menuSelect, setMenuSelect] = useState("");
+  const [message, setMessage] = useState("");
   const { isLoading, currentTable } = useSelector(state => state.table);
   const { schemaKey } = useSelector(state => state.table.currentSchemaData);
 
   useEffect(() => {
     setMenuSelect("schema");
-    dispatch(getSchema(currentTable));
-  }, [currentTable]); // schema thunk api 요청
+    dispatch(getSchema(currentTable))
+      .unwrap()
+      .then(() => {
+        setMessage("");
+      })
+      .catch(() => {
+        setMessage("스키마 불러오기에 실패했습니다.");
+      });
+  }, [currentTable]);
 
   useEffect(() => {
     if (schemaKey) {
@@ -26,9 +34,9 @@ export default function mainContainer() {
     }
   }, [schemaKey]);
 
-  return (
-    <main className="mainContainer">
-      {!isLoading ? (
+  if (!isLoading && message === "")
+    return (
+      <main className="mainContainer">
         <div className="selector">
           <span
             className={cx("selectTag", { isFocus: menuSelect === "schema" })}
@@ -55,11 +63,11 @@ export default function mainContainer() {
             API 문서
           </span>
         </div>
-      ) : (
-        <Loading />
-      )}
-      {!isLoading && menuSelect === "schema" && <Schema />}
-      {!isLoading && menuSelect === "data" && <DataCardList />}
-    </main>
-  );
+        {!isLoading && menuSelect === "schema" && <Schema />}
+        {!isLoading && menuSelect === "data" && <DataCardList />}
+      </main>
+    );
+  if (!isLoading && message !== "")
+    return <div className="error">{message}</div>;
+  if (isLoading) return <Loading />;
 }
