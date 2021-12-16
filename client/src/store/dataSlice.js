@@ -69,12 +69,10 @@ export const dataSlice = createSlice({
     },
     [addData.fulfilled.type]: (state, action) => {
       state.isLoading = false;
-      // state.currentDataList = action.payload;
     },
     [addData.rejected.type]: (state, action) => {
       state.isLoading = false;
-      // state.currentDataList = [];
-      console.log(action.payload);
+      state.currentDataList = [];
     },
 
     [removeData.pending.type]: (state, action) => {
@@ -82,12 +80,10 @@ export const dataSlice = createSlice({
     },
     [removeData.fulfilled.type]: (state, action) => {
       state.isLoading = false;
-      // state.currentDataList = action.payload;
     },
     [removeData.rejected.type]: (state, action) => {
       state.isLoading = false;
-      // state.currentDataList = [];
-      console.log(action.payload);
+      state.currentDataList = [];
     },
   },
 });

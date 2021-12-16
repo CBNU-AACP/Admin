@@ -8,27 +8,41 @@ import DataCard from "./DataCard";
 import "./style.scss";
 
 export default function DataCardList() {
+  const [dataList, setDataList] = useState([]);
   const [reload, setReload] = useState(true);
+  const [message, setMessage] = useState("");
   const dispatch = useDispatch();
   const nextId = useRef(0);
   const { currentTable, currentSchemaData } = useSelector(state => state.table);
   const { isLoading, currentDataList } = useSelector(state => state.data);
-  const [dataList, setDataList] = useState([]);
   const { attributes, schemaKey } = currentSchemaData;
 
   useEffect(() => {
     if (reload) {
       nextId.current = 0;
       dispatch(getData(currentTable))
+        .unwrap()
         .then(res => {
-          setDataList(
-            res.payload.map(data => {
-              nextId.current += 1;
-              return { clientId: nextId.current, ...data };
-            }),
-          );
+          if (res.length === 0) {
+            setDataList([]);
+            setMessage("데이터가 없습니다.");
+            return;
+          }
+          if (res.length !== 0) {
+            setDataList(
+              res.map(data => {
+                nextId.current += 1;
+                return { clientId: nextId.current, ...data };
+              }),
+            );
+            setMessage("");
+          }
         })
-        .catch(e => console.log(e));
+        .catch(e => {
+          console.log(e);
+          setDataList([]);
+          setMessage("데이터 불러오기에 실패했습니다.");
+        });
       setReload(false);
     }
   }, [reload]);
@@ -39,9 +53,17 @@ export default function DataCardList() {
         tableName: currentTable,
         rows: deleteKey([data], ["clientId", "createdAt", "updatedAt"]),
       }),
-    ).then(() => {
-      setReload(true);
-    });
+    )
+      .unwrap()
+      .then(() => {
+        setReload(true);
+        setMessage("");
+      })
+      .catch(e => {
+        console.log(e);
+        setDataList([]);
+        setMessage("데이터 추가에 실패했습니다.");
+      });
   };
 
   const remove = (remove, pk) => {
@@ -50,9 +72,17 @@ export default function DataCardList() {
         tableName: currentTable,
         [searchKeyPK(schemaKey)]: pk,
       }),
-    ).then(() => {
-      setReload(true);
-    });
+    )
+      .unwrap()
+      .then(() => {
+        setReload(true);
+        setMessage("");
+      })
+      .catch(e => {
+        console.log(e);
+        setDataList([]);
+        setMessage("데이터 삭제에 실패했습니다.");
+      });
   };
 
   const newData = () => {
@@ -63,25 +93,31 @@ export default function DataCardList() {
   return !isLoading && attributes && !reload ? (
     <>
       <h2 className="dataListTitle">{currentTable} 테이블의 데이터 목록</h2>
-      <div className="dataList">
-        {dataList.map(data => (
-          <DataCard
-            isNew={currentDataList.length < data.clientId}
-            data={data}
-            key={data + data.clientId}
-            clientId={data.clientId}
-            add={addNewData}
-            remove={remove}
-          />
-        ))}
-      </div>
-      <button
-        className="createData"
-        type="button"
-        onClick={newData}
-        aria-hidden="true">
-        <IoAddOutline className="createText" />
-      </button>
+      {message === "" ? (
+        <>
+          <div className="dataList">
+            {dataList.map(data => (
+              <DataCard
+                isNew={currentDataList.length < data.clientId}
+                data={data}
+                key={data + data.clientId}
+                clientId={data.clientId}
+                add={addNewData}
+                remove={remove}
+              />
+            ))}
+          </div>
+          <button
+            className="createData"
+            type="button"
+            onClick={newData}
+            aria-hidden="true">
+            <IoAddOutline className="createText" />
+          </button>
+        </>
+      ) : (
+        <div className="error">{message}</div>
+      )}
     </>
   ) : (
     <Loading />
