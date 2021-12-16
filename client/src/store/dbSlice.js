@@ -52,7 +52,6 @@ export const dbSlice = createSlice({
   extraReducers: {
     [getDataBases.pending.type]: (state, action) => {
       state.isLoading = true;
-      state.databases = action.payload;
     },
     [getDataBases.fulfilled.type]: (state, action) => {
       state.isLoading = false;
@@ -60,29 +59,27 @@ export const dbSlice = createSlice({
     },
     [getDataBases.rejected.type]: (state, action) => {
       state.isLoading = false;
-      state.databases = action.payload;
+      state.databases = [];
     },
 
     [createDataBases.pending.type]: (state, action) => {
       state.isLoading = true;
-      state.databases = action.payload;
     },
     [createDataBases.fulfilled.type]: (state, action) => {
       state.databases = action.payload;
     },
     [createDataBases.rejected.type]: (state, action) => {
-      state.databases = action.payload;
+      // state.databases = action.payload;
     },
 
     [removeDataBases.pending.type]: (state, action) => {
       state.isLoading = true;
-      state.databases = action.payload;
     },
     [removeDataBases.fulfilled.type]: (state, action) => {
       state.databases = action.payload;
     },
     [removeDataBases.rejected.type]: (state, action) => {
-      state.databases = action.payload;
+      // state.databases = action.payload;
     },
   },
 });

@@ -103,7 +103,7 @@ export const tableSlice = createSlice({
     },
     [addTable.fulfilled.type]: (state, action) => {
       state.isLoading = false;
-      state.tables = [...state.tables, action.payload.data.name];
+      state.tables = [...state.tables, action.payload.data.name].sort();
     },
     [addTable.rejected.type]: (state, action) => {
       state.isLoading = false;

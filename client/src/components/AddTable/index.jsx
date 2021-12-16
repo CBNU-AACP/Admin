@@ -50,7 +50,6 @@ export default function AddTable() {
       dispatch(
         addTable({ tableName, column: [...deleteKey(columns, ["clientId"])] }),
       );
-    console.log({ tableName, column: [...deleteKey(columns, ["clientId"])] });
   };
 
   return !isLoading ? (
