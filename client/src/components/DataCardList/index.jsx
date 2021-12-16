@@ -28,15 +28,13 @@ export default function DataCardList() {
             setMessage("데이터가 없습니다.");
             return;
           }
-          if (res.length !== 0) {
-            setDataList(
-              res.map(data => {
-                nextId.current += 1;
-                return { clientId: nextId.current, ...data };
-              }),
-            );
-            setMessage("");
-          }
+          setDataList(
+            res.map(data => {
+              nextId.current += 1;
+              return { clientId: nextId.current, ...data };
+            }),
+          );
+          setMessage("");
         })
         .catch(e => {
           console.log(e);
