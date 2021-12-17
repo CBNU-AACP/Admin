@@ -150,15 +150,14 @@ const getPKs = async(req,res,next) => {
       let referencedTable = await poolQuery(`SELECT referenced_table_name FROM information_schema.key_column_usage WHERE table_name = '${Object.keys(body)[0]}' AND table_schema = '${MYSQL_DATABASE}' and column_name = '${FK}';`);
       let temp = {};
       let tempArr = [];
-      console.log(referencedTable[0]);
       if(referencedTable[0].length == 0)
         return next(TABLE_NOT_EXISTED);
       
       let columnsPK = await poolQuery(`SELECT column_name FROM Information_schema.columns
-      WHERE table_schema = '${MYSQL_DATABASE}' AND table_name = '${referencedTable[0][0]["REFERENCED_TABLE_NAME"]}' AND column_key = 'PRI';
+      WHERE table_schema = '${MYSQL_DATABASE}' AND table_name = '${referencedTable[0][0].referenced_table_name}' AND column_key = 'PRI';
       `);
 
-      let values = await poolQuery(`SELECT ${Object.values(columnsPK[0][0])} FROM ${referencedTable[0][0]["REFERENCED_TABLE_NAME"]};`);
+      let values = await poolQuery(`SELECT ${Object.values(columnsPK[0][0])} FROM ${referencedTable[0][0].referenced_table_name};`);
 
       for(const i of values[0]) {
         tempArr.push(Object.values(i)[0]);
