@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { IoAddOutline } from "react-icons/io5";
 import { getData, addData, removeData } from "../../store/dataSlice";
 import Loading from "../Loading";
+import Error from "../Error";
 import { deleteKey, searchKeyPK } from "../../utils";
 import DataCard from "./DataCard";
 import "./style.scss";
@@ -14,7 +15,9 @@ export default function DataCardList() {
   const dispatch = useDispatch();
   const nextId = useRef(0);
   const { currentTable, currentSchemaData } = useSelector(state => state.table);
-  const { isLoading, currentDataList } = useSelector(state => state.data);
+  const { isLoading, errorMessage, currentDataList } = useSelector(
+    state => state.data,
+  );
   const { attributes, schemaKey } = currentSchemaData;
 
   useEffect(() => {
@@ -25,7 +28,6 @@ export default function DataCardList() {
         .then(res => {
           if (res.length === 0) {
             setDataList([]);
-            setMessage("데이터가 없습니다.");
             return;
           }
           setDataList(
@@ -114,7 +116,7 @@ export default function DataCardList() {
           </button>
         </>
       ) : (
-        <div className="error">{message}</div>
+        <Error message={message} error={errorMessage} />
       )}
     </>
   ) : (

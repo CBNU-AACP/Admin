@@ -5,13 +5,16 @@ import DataBase from "./DbCard";
 import { getDataBases } from "../../store/dbSlice";
 import "./style.scss";
 import Loading from "../Loading";
+import Error from "../Error";
 
 export default function DataBases() {
   const dispatch = useDispatch();
   const [dbData, setDBData] = useState([]);
   const [message, setMessage] = useState("");
   const nextId = useRef(0);
-  const { isLoading, databases } = useSelector(state => state.database);
+  const { isLoading, errorMessage, databases } = useSelector(
+    state => state.database,
+  );
 
   useEffect(() => {
     dispatch(getDataBases())
@@ -77,6 +80,6 @@ export default function DataBases() {
       </>
     );
   if (!isLoading && message !== "")
-    return <div className="error">{message}</div>;
-  if (isLoading) return <Loading className="dbLoading"/>;
+    return <Error message={message} error={errorMessage} />;
+  if (isLoading) return <Loading className="dbLoading" />;
 }

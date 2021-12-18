@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import SchemaMocks from "../../__mocks/SchemaMocks";
 import { getPKs, getSchema } from "../../store/tableSlice";
 import Loading from "../Loading";
+import Error from "../Error";
 import Schema from "../Schema";
 import "./style.scss";
 import DataCardList from "../DataCardList";
@@ -12,7 +13,9 @@ export default function MainContainer() {
   const dispatch = useDispatch();
   const [menuSelect, setMenuSelect] = useState("");
   const [message, setMessage] = useState("");
-  const { isLoading, currentTable } = useSelector(state => state.table);
+  const { isLoading, errorMessage, currentTable } = useSelector(
+    state => state.table,
+  );
   const { schemaKey } = useSelector(state => state.table.currentSchemaData);
 
   useEffect(() => {
@@ -68,6 +71,6 @@ export default function MainContainer() {
       </main>
     );
   if (!isLoading && message !== "")
-    return <div className="error">{message}</div>;
+    return <Error message={message} error={errorMessage} />;
   if (isLoading) return <Loading />;
 }

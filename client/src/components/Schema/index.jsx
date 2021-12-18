@@ -3,13 +3,14 @@ import cx from "classnames";
 import { useSelector, useDispatch } from "react-redux";
 import { removeTable, getSchema } from "../../store/tableSlice";
 import Loading from "../Loading";
+import Error from "../Error";
 import "./style.scss";
 
 export default function Schema() {
   const dispatch = useDispatch();
   const [isLoading, setLoading] = useState(true);
   const [message, setMessage] = useState("");
-  const currentTable = useSelector(state => state.table.currentTable);
+  const { currentTable, errorMessage } = useSelector(state => state.table);
   const { original } = useSelector(state => state.table.currentSchemaData);
 
   useEffect(() => {
@@ -72,6 +73,6 @@ export default function Schema() {
       </div>
     );
   if (!isLoading && message !== "")
-    return <div className="error">{message}</div>; // DataCardList의 .error 사용
+    return <Error message={message} error={errorMessage} />;
   if (isLoading) return <Loading />;
 }
