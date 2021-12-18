@@ -11,7 +11,7 @@ export const getData = createAsyncThunk(
       const response = await axios.get(`/v1/row/${tablename}`);
       return response.data.data;
     } catch (err) {
-      return thunkAPI.rejectWithValue(err);
+      return thunkAPI.rejectWithValue(err.response.data);
     }
   },
 );
@@ -24,7 +24,7 @@ export const addData = createAsyncThunk(
       const response = await axios.post(`/v1/row`, data);
       return response.data.data;
     } catch (err) {
-      return thunkAPI.rejectWithValue(err);
+      return thunkAPI.rejectWithValue(err.response.data);
     }
   },
 );
@@ -37,13 +37,14 @@ export const removeData = createAsyncThunk(
       const response = await axios.post(`/v1/row/delete`, data);
       return response.data.data;
     } catch (err) {
-      return thunkAPI.rejectWithValue(err);
+      return thunkAPI.rejectWithValue(err.response.data);
     }
   },
 );
 
 const initialState = {
   isLoading: false,
+  error: "",
   currentDataList: [],
 };
 
@@ -57,10 +58,12 @@ export const dataSlice = createSlice({
     },
     [getData.fulfilled.type]: (state, action) => {
       state.isLoading = false;
+      state.errorMessage = "";
       state.currentDataList = action.payload;
     },
     [getData.rejected.type]: (state, action) => {
       state.isLoading = false;
+      state.errorMessage = action.payload.message;
       state.currentDataList = [];
     },
 
@@ -69,9 +72,11 @@ export const dataSlice = createSlice({
     },
     [addData.fulfilled.type]: (state, action) => {
       state.isLoading = false;
+      state.errorMessage = "";
     },
     [addData.rejected.type]: (state, action) => {
       state.isLoading = false;
+      state.errorMessage = action.payload.message;
       state.currentDataList = [];
     },
 
@@ -80,9 +85,11 @@ export const dataSlice = createSlice({
     },
     [removeData.fulfilled.type]: (state, action) => {
       state.isLoading = false;
+      state.errorMessage = "";
     },
     [removeData.rejected.type]: (state, action) => {
       state.isLoading = false;
+      state.errorMessage = action.payload.message;
       state.currentDataList = [];
     },
   },

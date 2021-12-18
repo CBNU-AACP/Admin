@@ -11,7 +11,7 @@ export const getDataBases = createAsyncThunk(
       const response = await axios.get("/v1/database");
       return response.data.data;
     } catch (err) {
-      return thunkAPI.rejectWithValue(err);
+      return thunkAPI.rejectWithValue(err.response.data);
     }
   },
 );
@@ -23,7 +23,7 @@ export const createDataBases = createAsyncThunk(
       const response = await axios.post(`/v1/database/${name}`);
       return response.data.data;
     } catch (err) {
-      return thunkAPI.rejectWithValue(err);
+      return thunkAPI.rejectWithValue(err.response.data);
     }
   },
 );
@@ -35,13 +35,14 @@ export const removeDataBases = createAsyncThunk(
       const response = await axios.delete(`/v1/database/${name}`);
       return response.data.data;
     } catch (err) {
-      return thunkAPI.rejectWithValue(err);
+      return thunkAPI.rejectWithValue(err.response.data);
     }
   },
 );
 
 const initialState = {
   isLoading: false,
+  error: "",
   databases: [],
 };
 
@@ -55,10 +56,12 @@ export const dbSlice = createSlice({
     },
     [getDataBases.fulfilled.type]: (state, action) => {
       state.isLoading = false;
+      state.errorMessage = "";
       state.databases = action.payload;
     },
     [getDataBases.rejected.type]: (state, action) => {
       state.isLoading = false;
+      state.errorMessage = action.payload.message;
       state.databases = [];
     },
 
@@ -66,9 +69,13 @@ export const dbSlice = createSlice({
       state.isLoading = true;
     },
     [createDataBases.fulfilled.type]: (state, action) => {
+      state.isLoading = false;
+      state.errorMessage = "";
       state.databases = action.payload;
     },
     [createDataBases.rejected.type]: (state, action) => {
+      state.isLoading = false;
+      state.errorMessage = action.payload.message;
       // state.databases = action.payload;
     },
 
@@ -76,9 +83,13 @@ export const dbSlice = createSlice({
       state.isLoading = true;
     },
     [removeDataBases.fulfilled.type]: (state, action) => {
+      state.isLoading = false;
+      state.errorMessage = "";
       state.databases = action.payload;
     },
     [removeDataBases.rejected.type]: (state, action) => {
+      state.isLoading = false;
+      state.errorMessage = action.payload.message;
       // state.databases = action.payload;
     },
   },

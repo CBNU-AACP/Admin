@@ -10,11 +10,9 @@ export const store = configureStore({
     table: tableSlice.reducer,
     data: dataSlice.reducer,
   },
-  // middleware: new MiddlewareArray(),
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: false,
     }).concat(logger),
-  // middleware:
   // devTools: process.env.NODE_ENV !== "production",
 });

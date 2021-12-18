@@ -12,7 +12,8 @@ export const getTables = createAsyncThunk(
       const response = await axios.get("/v1/table");
       return response.data.data;
     } catch (err) {
-      return thunkAPI.rejectWithValue(err);
+      console.log(err.response.data);
+      return thunkAPI.rejectWithValue(err.response.data);
     }
   },
 );
@@ -22,9 +23,9 @@ export const addTable = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await axios.post("/v1/table", data);
-      return response.data;
+      return response.data.data;
     } catch (err) {
-      return thunkAPI.rejectWithValue(err);
+      return thunkAPI.rejectWithValue(err.response.data);
     }
   },
 );
@@ -34,9 +35,9 @@ export const removeTable = createAsyncThunk(
   async (tableName, thunkAPI) => {
     try {
       const response = await axios.delete(`/v1/table/${tableName}`);
-      return response.data;
+      return response.data.data;
     } catch (err) {
-      return thunkAPI.rejectWithValue(err);
+      return thunkAPI.rejectWithValue(err.response.data);
     }
   },
 );
@@ -48,7 +49,7 @@ export const getSchema = createAsyncThunk(
       const response = await axios.get(`/v1/table/single/${tablename}`);
       return response.data.data;
     } catch (err) {
-      return thunkAPI.rejectWithValue(err);
+      return thunkAPI.rejectWithValue(err.response.data);
     }
   },
 );
@@ -57,17 +58,17 @@ export const getPKs = createAsyncThunk(
   `${name}/getPKs`,
   async (data, thunkAPI) => {
     try {
-      console.log(data);
       const response = await axios.post("/v1/row/getPKs", data);
       return response.data.data;
     } catch (err) {
-      return thunkAPI.rejectWithValue(err);
+      return thunkAPI.rejectWithValue(err.response.data);
     }
   },
 );
 
 const initialState = {
   isLoading: false,
+  errorMessage: "",
   tables: [],
   currentTable: "createTable",
   currentSchemaData: {},
@@ -88,11 +89,14 @@ export const tableSlice = createSlice({
     },
     [getTables.fulfilled.type]: (state, action) => {
       state.isLoading = false;
+      state.errorMessage = "";
       state.tables = [...action.payload];
       state.currentTable = "createTable";
       state.currentSchemaData = [];
     },
     [getTables.rejected.type]: (state, action) => {
+      state.isLoading = false;
+      state.errorMessage = action.payload.message;
       state.tables = action.payload;
       state.currentTable = "createTable";
       state.currentSchemaData = [];
@@ -103,16 +107,19 @@ export const tableSlice = createSlice({
     },
     [addTable.fulfilled.type]: (state, action) => {
       state.isLoading = false;
+      state.errorMessage = "";
       state.tables = [...state.tables, action.payload.data.name].sort();
     },
     [addTable.rejected.type]: (state, action) => {
       state.isLoading = false;
+      state.errorMessage = action.payload.message;
     },
 
     [removeTable.pending.type]: (state, action) => {
       state.isLoading = true;
     },
     [removeTable.fulfilled.type]: (state, action) => {
+      state.errorMessage = "";
       state.tables = [
         ...state.tables.filter(table => table !== action.payload.data.name),
       ];
@@ -121,6 +128,7 @@ export const tableSlice = createSlice({
     },
     [removeTable.rejected.type]: (state, action) => {
       state.isLoading = false;
+      state.errorMessage = action.payload.message;
     },
 
     [getSchema.pending.type]: (state, action) => {
@@ -128,6 +136,7 @@ export const tableSlice = createSlice({
     },
     [getSchema.fulfilled.type]: (state, action) => {
       state.isLoading = false;
+      state.errorMessage = "";
       state.currentSchemaData = {
         original: action.payload,
         attributes: dataToSchema(action.payload),
@@ -136,6 +145,7 @@ export const tableSlice = createSlice({
     },
     [getSchema.rejected.type]: (state, action) => {
       state.isLoading = false;
+      state.errorMessage = action.payload.message;
       state.currentSchemaData = {};
     },
 
@@ -144,9 +154,12 @@ export const tableSlice = createSlice({
     },
     [getPKs.fulfilled.type]: (state, action) => {
       state.isLoading = false;
+      state.errorMessage = "";
       state.currentSchemaPKs = action.payload;
     },
     [getPKs.rejected.type]: (state, action) => {
+      state.isLoading = false;
+      state.errorMessage = action.payload.message;
       state.currentSchemaPKs = [];
     },
   },
