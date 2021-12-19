@@ -11,15 +11,7 @@ module.exports = class Admin extends Sequelize.Model {
         userPassword: {
           type: Sequelize.STRING(100),
           allowNull: false,
-        },
-        birthDate: {
-          type: Sequelize.STRING(20),
-          allowNull: false,
-        },
-        age: {
-          type: Sequelize.INTEGER(20),
-          allowNull: false,
-        },
+        }
       },
       {
         sequelize,
