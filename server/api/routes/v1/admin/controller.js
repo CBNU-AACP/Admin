@@ -45,10 +45,10 @@ const login = async(req,res,next) => {
     }
 
     const accessToken = await jwt.sign({uid: user.id}, JWT_SECRET_KEY_FILE, {algorithm: 'HS512', expiresIn: '1h'});  //accessToken 생성 
-    res.cookie('refreshToken', refreshToken, {httpOnly: true}); //refreshToken은 secure, httpOnly 옵션을 가진 쿠키로 보내 CSRF 공격을 방어
-    res.cookie('accessToken', accessToken, {httpOnly: true}); //accessToken은 secure, httpOnly 옵션을 가진 쿠키로 보내 CSRF 공격을 방어
+    //res.cookie('refreshToken', refreshToken, {httpOnly: true}); //refreshToken은 secure, httpOnly 옵션을 가진 쿠키로 보내 CSRF 공격을 방어
+    //res.cookie('accessToken', accessToken, {httpOnly: true}); //accessToken은 secure, httpOnly 옵션을 가진 쿠키로 보내 CSRF 공격을 방어
     //원래는 accessToken은 authorization header에 보내주는 게 보안상 좋지만, MVP 모델에서는 간소화
-    return res.json(createResponse(res, user)); 
+    return res.json(createResponse(res, {accessToken, refreshToken})); 
   } catch (error) {
     console.error(error);
     next(error);
@@ -98,9 +98,9 @@ const test = async(req,res,next) => { //토큰 잘 사용되는지 확인해보�
   try {
     console.log("성 공 적");
     console.log("이것은 Access");
-    console.log(req.cookies.accessToken);
+    console.log(req.headers.authorization.split('Bearer ')[1]);
     console.log("이것은 Refresh");
-    console.log(req.cookies.refreshToken);
+    console.log(req.headers.refresh);
     return res.json(createResponse(res, "성공했습니다."));
   } catch (error) {
     console.error(error);
