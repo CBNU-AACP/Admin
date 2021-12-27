@@ -145,6 +145,8 @@ const deleteRow = async(req,res,next) => {
 const getPKs = async(req,res,next) => {
   const body = req.body;
   try {
+    const tables = await descTable(body.name);
+
     let PKs = [];
     for(const FK of Object.values(body)[0]) {
       let referencedTable = await poolQuery(`SELECT referenced_table_name FROM information_schema.key_column_usage WHERE table_name = '${Object.keys(body)[0]}' AND table_schema = '${MYSQL_DATABASE}' and column_name = '${FK}';`);
@@ -166,10 +168,27 @@ const getPKs = async(req,res,next) => {
       temp[`${Object.values(columnsPK[0][0])}`] = tempArr;
       PKs.push(temp);        
     }
-    return res.json(createResponse(res, PKs));
+    return res.json(createResponse(res, {PKs,tables}));
   } catch (error) {
     console.error(error);
   }
 };
+
+const descTable = (name)=>{
+  return new Promise(async(resolve, reject) =>{
+    try {
+        const q = `DESC ${name}`;
+        let doc = await poolQuery(q);
+        doc = await doc[0].map(item=>{
+            delete item.Extra
+            return item;
+        });
+        resolve(doc);
+    } catch (error) {
+        console.error(error);
+        reject(error);
+    }
+  })
+}
 
 module.exports = {showRows, createRows, updateRows, deleteRow, getPKs};
