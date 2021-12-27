@@ -12,6 +12,7 @@ const poolQuery = ((q)=>{
             }
             const pool = mysql.createPool(config).promise();
             const doc = await pool.query(`${q}`);
+            pool.end();
             resolve(doc);
         } catch (error) {
             reject(error);
