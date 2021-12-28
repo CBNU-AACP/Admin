@@ -6,6 +6,6 @@ router.get('/:tableName',controller.showRows);
 router.post('/',controller.createRows);
 router.post('/update', controller.updateRows);
 router.post('/delete', controller.deleteRow);
-router.post('/getPKs', controller.getPKs);
+router.post('/getPKs', controller.descTableAndGetPks);
 
 module.exports = router;
