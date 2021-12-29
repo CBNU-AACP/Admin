@@ -154,7 +154,7 @@ const descTableAndGetPks = async(req,res,next)=>{
         return item;
       });
       let rows = await getPKs({"members":fks});
-      return res.json(createResponse(res,{"columns":rows,"PKs":doc}))
+      return res.json(createResponse(res,{"PKs":rows,"columns":doc}))
   } catch (error) {
       console.error(error);
       next(error);
