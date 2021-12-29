@@ -50,4 +50,4 @@ const dropTable = async(req,res,next)=>{
         next(error);
     }
 }
-module.exports = {showTables, createTable, dropTable, descTable};
+module.exports = {showTables, createTable, dropTable};
