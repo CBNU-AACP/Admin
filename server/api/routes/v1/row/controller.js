@@ -146,15 +146,15 @@ const descTableAndGetPks = async(req,res,next)=>{
   const {name} = req.body;  
   try {
       const q = `DESC ${name}`;
-      let fks = [];
-      let doc = await poolQuery(q);
-      doc = await doc[0].map(item=>{
+      const fks = [];
+      let columns = await poolQuery(q);
+      columns = await columns[0].map(item => {
         if(item.Key == "MUL") fks.push(item.Field);
-        delete item.Extra
+        delete item.Extra;
         return item;
       });
-      let rows = await getPKs({"members":fks});
-      return res.json(createResponse(res,{"PKs":rows,"columns":doc}))
+      const PKs = await getPKs({ [`${name}`]: fks });
+      return res.json(createResponse(res, { PKs, columns}));
   } catch (error) {
       console.error(error);
       next(error);
@@ -162,36 +162,36 @@ const descTableAndGetPks = async(req,res,next)=>{
 }
 
 const getPKs = (body) => {
-  return new Promise(async(resolve,reject) =>{
-  try {
-    const tables = await descTable(body.name);
+  return new Promise(
+    async(resolve,reject) => {
+      try {
+        const PKs = {};
+        for(const FK of Object.values(body)[0]) {
+          const referencedTable = await poolQuery(`SELECT referenced_table_name FROM information_schema.key_column_usage WHERE table_name = '${Object.keys(body)[0]}' AND table_schema = '${MYSQL_DATABASE}' and column_name = '${FK}';`);
+          // const temp = {};
+          const tempArr = [];
+          if(referencedTable[0].length === 0)
+            return reject(TABLE_NOT_EXISTED);
 
-    let PKs = [];
-    for(const FK of Object.values(body)[0]) {
-      let referencedTable = await poolQuery(`SELECT referenced_table_name FROM information_schema.key_column_usage WHERE table_name = '${Object.keys(body)[0]}' AND table_schema = '${MYSQL_DATABASE}' and column_name = '${FK}';`);
-      let temp = {};
-      let tempArr = [];
-      if(referencedTable[0].length == 0)
-         return reject(TABLE_NOT_EXISTED);
-      
-      let columnsPK = await poolQuery(`SELECT column_name FROM Information_schema.columns
-      WHERE table_schema = '${MYSQL_DATABASE}' AND table_name = '${referencedTable[0][0].referenced_table_name}' AND column_key = 'PRI';
-      `);
+          const columnsPK = await poolQuery(`SELECT column_name FROM Information_schema.columns
+          WHERE table_schema = '${MYSQL_DATABASE}' AND table_name = '${referencedTable[0][0].referenced_table_name}' AND column_key = 'PRI';
+          `);
 
-      let values = await poolQuery(`SELECT ${Object.values(columnsPK[0][0])} FROM ${referencedTable[0][0].referenced_table_name};`);
+          const values = await poolQuery(`SELECT ${Object.values(columnsPK[0][0])} FROM ${referencedTable[0][0].referenced_table_name};`);
 
-      for(const i of values[0]) {
-        tempArr.push(Object.values(i)[0]);
+          for(const i of values[0]) {
+            tempArr.push(Object.values(i)[0]);
+          }
+          // temp[`${Object.values(columnsPK[0][0])}`] = tempArr;
+          // PKs.push(temp);
+          PKs[`${FK}`] = tempArr;
+        }
+        return resolve(PKs);
+      } catch (error) {
+        console.error(error);
+        return reject(error);
       }
-      temp[`${Object.values(columnsPK[0][0])}`] = tempArr;
-      PKs.push(temp);        
-    }
-    return resolve(PKs);
-  } catch (error) {
-    console.error(error);
-    return reject(error);
-    }
-  })
-};
+  });
+}
 
 module.exports = {showRows, createRows, updateRows, deleteRow, descTableAndGetPks};
