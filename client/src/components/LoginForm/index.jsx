@@ -4,7 +4,8 @@ import { useForm } from "react-hook-form";
 import { AiOutlineLock, AiOutlineUnlock } from "react-icons/ai";
 import { IoPersonOutline } from "react-icons/io5";
 import cx from "classnames";
-import http from "../../common/axios";
+import axios from "../../common/axios";
+import { setCookie, getCookie } from "../../common/cookies";
 import "./style.scss";
 
 export default function LoginForm() {
@@ -22,30 +23,33 @@ export default function LoginForm() {
   const navigate = useNavigate();
 
   const userId = register("userId", { required: true });
-  const password = register("password", { required: true });
+  const userPassword = register("userPassword", { required: true });
 
   useEffect(() => {
     if (errors.userId) {
       setMessage("아이디를 입력해주세요.");
       return;
     }
-    if (errors.password) {
+    if (errors.userPassword) {
       setMessage("비밀번호를 입력해주세요.");
       return;
     }
     setMessage("");
-  }, [errors.userId, errors.password]);
+  }, [errors.userId, errors.userPassword]);
 
   const onSubmit = async data => {
-    // console.log(data);
-    // try {
-    //   const response = await http.post(`login`, data);
-    //   localStorage.setItem("isAuthorized", response.success);
-    //   if (response.success) navigate("/");
-    // } catch (e) {
-    //   console.log(e);
-    // }
-    navigate("/");
+    console.log(data);
+    try {
+      const response = await axios.post(`/v1/admin/login`, data);
+      const { accessToken, refreshToken } = response.data.data;
+      if (response.data.data) {
+        setCookie("accessToken", accessToken, {});
+        setCookie("refreshToken", refreshToken, {});
+        navigate("/");
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
@@ -85,11 +89,11 @@ export default function LoginForm() {
             type={isLock ? "password" : "text"}
             className="input"
             placeholder="비밀번호"
-            name={password.name}
-            onChange={password.onChange}
+            name={userPassword.name}
+            onChange={userPassword.onChange}
             onFocus={() => setFocusPw(true)}
             onBlur={() => setFocusPw(false)}
-            ref={password.ref}
+            ref={userPassword.ref}
           />
         </div>
         <p className="message">{message}</p>
