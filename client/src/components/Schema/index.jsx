@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
 import cx from "classnames";
 import { useSelector, useDispatch } from "react-redux";
-import { removeTable, getSchema } from "../../store/tableSlice";
+import { removeTable } from "../../store/tableSlice";
 import Loading from "../Loading";
 import Error from "../Error";
 import "./style.scss";

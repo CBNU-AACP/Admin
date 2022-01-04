@@ -12,7 +12,6 @@ export const getTables = createAsyncThunk(
       const response = await axios.get("/v1/table");
       return response.data.data;
     } catch (err) {
-      console.log(err.response.data);
       return thunkAPI.rejectWithValue(err.response.data);
     }
   },
@@ -23,6 +22,7 @@ export const addTable = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       const response = await axios.post("/v1/table", data);
+      console.log(response);
       return response.data.data;
     } catch (err) {
       return thunkAPI.rejectWithValue(err.response.data);
@@ -42,23 +42,11 @@ export const removeTable = createAsyncThunk(
   },
 );
 
-export const getSchema = createAsyncThunk(
-  `${name}/getSchema`,
-  async (tablename, thunkAPI) => {
+export const getSchemaPKs = createAsyncThunk(
+  `${name}/getSchemaPKs`,
+  async (tableName, thunkAPI) => {
     try {
-      const response = await axios.get(`/v1/table/single/${tablename}`);
-      return response.data.data;
-    } catch (err) {
-      return thunkAPI.rejectWithValue(err.response.data);
-    }
-  },
-);
-
-export const getPKs = createAsyncThunk(
-  `${name}/getPKs`,
-  async (data, thunkAPI) => {
-    try {
-      const response = await axios.post("/v1/row/getPKs", data);
+      const response = await axios.post(`/v1/row/getPKs/`, { name: tableName });
       return response.data.data;
     } catch (err) {
       return thunkAPI.rejectWithValue(err.response.data);
@@ -96,8 +84,9 @@ export const tableSlice = createSlice({
     },
     [getTables.rejected.type]: (state, action) => {
       state.isLoading = false;
-      state.errorMessage = action.payload.message;
-      state.tables = action.payload;
+      state.tables = [];
+      console.log(action.payload);
+      // state.errorMessage = action.payload.message;
       state.currentTable = "createTable";
       state.currentSchemaData = [];
     },
@@ -108,7 +97,7 @@ export const tableSlice = createSlice({
     [addTable.fulfilled.type]: (state, action) => {
       state.isLoading = false;
       state.errorMessage = "";
-      state.tables = [...state.tables, action.payload.data.name].sort();
+      state.tables = [...state.tables, action.payload.name].sort();
     },
     [addTable.rejected.type]: (state, action) => {
       state.isLoading = false;
@@ -121,7 +110,7 @@ export const tableSlice = createSlice({
     [removeTable.fulfilled.type]: (state, action) => {
       state.errorMessage = "";
       state.tables = [
-        ...state.tables.filter(table => table !== action.payload.data.name),
+        ...state.tables.filter(table => table !== action.payload.name),
       ];
       state.currentTable = "createTable";
       state.isLoading = false;
@@ -131,36 +120,23 @@ export const tableSlice = createSlice({
       state.errorMessage = action.payload.message;
     },
 
-    [getSchema.pending.type]: (state, action) => {
+    [getSchemaPKs.pending.type]: (state, action) => {
       state.isLoading = true;
     },
-    [getSchema.fulfilled.type]: (state, action) => {
+    [getSchemaPKs.fulfilled.type]: (state, action) => {
       state.isLoading = false;
       state.errorMessage = "";
       state.currentSchemaData = {
-        original: action.payload,
-        attributes: dataToSchema(action.payload),
-        schemaKey: dataToKey(action.payload),
+        original: action.payload.columns,
+        attributes: dataToSchema(action.payload.columns),
+        schemaKey: dataToKey(action.payload.columns),
       };
+      state.currentSchemaPKs = action.payload.PKs;
     },
-    [getSchema.rejected.type]: (state, action) => {
+    [getSchemaPKs.rejected.type]: (state, action) => {
       state.isLoading = false;
       state.errorMessage = action.payload.message;
       state.currentSchemaData = {};
-    },
-
-    [getPKs.pending.type]: (state, action) => {
-      state.isLoading = true;
-    },
-    [getPKs.fulfilled.type]: (state, action) => {
-      state.isLoading = false;
-      state.errorMessage = "";
-      state.currentSchemaPKs = action.payload;
-    },
-    [getPKs.rejected.type]: (state, action) => {
-      state.isLoading = false;
-      state.errorMessage = action.payload.message;
-      state.currentSchemaPKs = [];
     },
   },
 });

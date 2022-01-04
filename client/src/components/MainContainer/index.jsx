@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect, useRef } from "react";
 import cx from "classnames";
 import { useDispatch, useSelector } from "react-redux";
 import SchemaMocks from "../../__mocks/SchemaMocks";
-import { getPKs, getSchema } from "../../store/tableSlice";
+import { getSchemaPKs } from "../../store/tableSlice";
 import Loading from "../Loading";
 import Error from "../Error";
 import Schema from "../Schema";
@@ -16,11 +16,10 @@ export default function MainContainer() {
   const { isLoading, errorMessage, currentTable } = useSelector(
     state => state.table,
   );
-  const { schemaKey } = useSelector(state => state.table.currentSchemaData);
 
   useEffect(() => {
     setMenuSelect("schema");
-    dispatch(getSchema(currentTable))
+    dispatch(getSchemaPKs(currentTable))
       .unwrap()
       .then(() => {
         setMessage("");
@@ -29,13 +28,6 @@ export default function MainContainer() {
         setMessage("스키마 불러오기에 실패했습니다.");
       });
   }, [currentTable]);
-
-  useEffect(() => {
-    if (schemaKey) {
-      console.log({ [currentTable]: schemaKey.FK });
-      // dispatch(getPKs({ [currentTable]: schemaKey.FK }));
-    }
-  }, [schemaKey]);
 
   if (!isLoading && message === "")
     return (

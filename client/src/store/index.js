@@ -12,7 +12,7 @@ export const store = configureStore({
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
-      serializableCheck: false,
+      // serializableCheck: false,
     }).concat(logger),
   // devTools: process.env.NODE_ENV !== "production",
 });
