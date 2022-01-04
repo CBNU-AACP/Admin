@@ -60,9 +60,10 @@
       padding: 5px;
       font-size: 18px;
       word-break: break-all;
+      .select,
       .input {
         line-height: 19px;
-        border: none;
+        border: 1px solid $gray400;
         border-radius: 6px;
         color: $darkmode;
         font-size: 18px;
@@ -75,6 +76,9 @@
         &::-ms-input-placeholder {
           font-size: 13px;
         }
+      }
+      .input {
+        border: none;
       }
     }
     .column {

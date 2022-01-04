@@ -7,7 +7,9 @@ import { searchKeyPK } from "../../../utils";
 import "./style.scss";
 
 export default function DataCard({ isNew, data, clientId, add, remove }) {
-  const currentSchemaData = useSelector(state => state.table.currentSchemaData);
+  const { currentSchemaData, currentSchemaPKs } = useSelector(
+    state => state.table,
+  );
   const { attributes, schemaKey } = currentSchemaData;
   const [msgState, setMsgState] = useState("");
   const [isAddClick, setIsAddClick] = useState(false);
@@ -23,6 +25,10 @@ export default function DataCard({ isNew, data, clientId, add, remove }) {
     }
     if (isAddClick && isNew) setMsgState("추가 중");
   }, [isNew, isAddClick]);
+
+  const fkSelect = (e, attribute) => {
+    data[attribute] = e.target.value;
+  };
 
   return (
     <div className="dataCard">
@@ -46,7 +52,26 @@ export default function DataCard({ isNew, data, clientId, add, remove }) {
               {Object.keys(attributes).map((attribute, index) => {
                 if (attribute === "createdAt" || attribute === "updatedAt")
                   return;
-
+                if (currentSchemaPKs[attribute])
+                  return (
+                    <tr key={attribute + attribute.length}>
+                      <td className="attribute column">{attribute}</td>
+                      <td className="attribute">
+                        <select
+                          className="select"
+                          name="fk"
+                          defaultValue=""
+                          onChange={e => fkSelect(e, attribute)}>
+                          <option value="">입력X</option>
+                          {currentSchemaPKs[attribute].map(FK => (
+                            <option key={FK + attribute} value={`${FK}`}>
+                              {FK}
+                            </option>
+                          ))}
+                        </select>
+                      </td>
+                    </tr>
+                  );
                 return (
                   <tr key={attribute + attribute.length}>
                     <td className="attribute column">{attribute}</td>
