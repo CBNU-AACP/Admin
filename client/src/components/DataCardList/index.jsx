@@ -14,7 +14,9 @@ export default function DataCardList() {
   const [message, setMessage] = useState("");
   const dispatch = useDispatch();
   const nextId = useRef(0);
-  const { currentTable, currentSchemaData } = useSelector(state => state.table);
+  const { currentTable, currentSchemaData, currentSchemaPKs } = useSelector(
+    state => state.table,
+  );
   const { isLoading, errorMessage, currentDataList } = useSelector(
     state => state.data,
   );
@@ -48,10 +50,18 @@ export default function DataCardList() {
   }, [reload]);
 
   const addNewData = data => {
+    const emptyFKs = [];
+    Object.keys(data).forEach(attribute => {
+      if (currentSchemaPKs[attribute] && !data[attribute])
+        emptyFKs.push(attribute);
+    });
     dispatch(
       addData({
         tableName: currentTable,
-        rows: deleteKey([data], ["clientId", "createdAt", "updatedAt"]),
+        rows: deleteKey(
+          [data],
+          ["clientId", "createdAt", "updatedAt", ...emptyFKs],
+        ),
       }),
     )
       .unwrap()
@@ -90,7 +100,10 @@ export default function DataCardList() {
     setDataList([...dataList, { clientId: nextId.current, ...attributes }]);
   };
 
-  return !isLoading && attributes && !reload ? (
+  return !isLoading &&
+    attributes &&
+    !reload &&
+    schemaKey.FK.length === Object.keys(currentSchemaPKs).length ? (
     <>
       <h2 className="dataListTitle">{currentTable} 테이블의 데이터 목록</h2>
       {message === "" ? (
